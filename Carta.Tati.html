@@ -59,7 +59,6 @@
     inset: 0;
   }
 
-  /* texto negro con brillo blanco para leerse sobre el fondo animado */
   .black-text {
     color: #000;
     text-shadow:
@@ -95,7 +94,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* fotos tipo polaroid arriba del sobre */
   .photo-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -165,24 +163,46 @@
   }
   .envelope.open .env-flap { transform: rotateX(180deg); z-index: 0; }
 
+  /* sello: imagen redonda personalizable, tamaño fijo */
   .seal {
     position: absolute;
-    top: 48%; left: 50%;
+    top: 48%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    width: 62px; height: 62px;
+    width: 68px;
+    height: 68px;
+    max-width: 68px;
+    max-height: 68px;
     border-radius: 50%;
+    overflow: hidden;
     background: radial-gradient(circle at 30% 30%, #c5ee9e, #93da63);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    font-weight: 700;
-    color: #143d00;
     z-index: 5;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.45),
+      0 0 0 3px #ffffff,
+      0 0 0 5px #93da63;
     transition: opacity 0.3s, transform 0.3s;
+    flex: 0 0 auto;
   }
-  .envelope.open .seal { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+
+  .seal img {
+    display: block;
+    width: 68px;
+    height: 68px;
+    max-width: 68px;
+    max-height: 68px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+  }
+
+  .envelope.open .seal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
 
   .hint {
     margin-top: 40px;
@@ -528,12 +548,11 @@
     </div>
 
     <div class="photo-row">
-      <!-- Reemplaza el src por la URL raw de GitHub de tu imagen -->
       <div class="photo">
-        <img src="https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/foto1.jpg" alt="Foto 1">
+        <img src="Images/tati1.jpg" alt="Foto 1">
       </div>
       <div class="photo">
-        <img src="https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/foto2.jpg" alt="Foto 2">
+        <img src="Images/tati2.jpg" alt="Foto 2">
       </div>
     </div>
 
@@ -541,7 +560,10 @@
       <div class="env-back"></div>
       <div class="env-front"></div>
       <div class="env-flap"></div>
-      <div class="seal">J</div>
+      <!-- sello: imagen redonda personalizable -->
+      <div class="seal">
+        <img src="Images/imagen.png" alt="Sello">
+      </div>
     </div>
     <p class="hint black-text">Toca el sobre para abrirlo</p>
   </section>
@@ -549,15 +571,12 @@
   <section class="scene-content" id="sceneContent">
 
     <div class="letter">
-      <h1>Te amo mucho mi amor</h1>
-      <p>Mi amor,
-
-Hay cosas que no se explican, solo se sienten. Y lo que siento por ti es de esas cosas. No sé exactamente en qué momento dejaste de ser alguien especial y te volviste mi persona, pero pasó, y no quiero que nunca se vaya.
-
-Te amo en cada detalle: en tu risa, en cómo me miras, en la forma en que haces que hasta lo más simple se sienta bonito. Te amo cuando estás contenta y también cuando no lo estás, porque ahí es cuando más quiero estar contigo.
-
-No sé qué traiga el futuro, pero sí sé que quiero que me encuentre contigo. Te amo, hoy y siempre.</p>
-      <p class="firma">Con cariño, Tu amorcito </p>
+      <h1>Tati.</h1>
+      <p>
+        Solo 9 dias, se estan pasando demasiado rapidoooo, pero bueno, hoy antes de darte tu carta te voy a regañar, ¿porque tenemos tan poquitas fotos las 2?. bueno ahora si, Tati quiero recordarte que eres de mis mejores amigas, y una muy buena amiga, marida (mmm ya) y demasiado guapa 😉. eres demasiado importante para mi Tati, en poco tiempo te convertiste en una persona muy especial (a pesar de que te veia creida jaja), solo faltan 9 dias para que cumplas 18 años. ¿que sientes sabiendo que en pocos dias seras legal? Los 18 te respiran en la nuca, I love you Tati, cada vez mas cerca de la fecha
+        ...9...
+      </p>
+      <p class="firma">Con cariño, Tu marida jaja (Janes) </p>
     </div>
 
     <h2 class="playlist-title">🎵</h2>
@@ -596,9 +615,7 @@ No sé qué traiga el futuro, pero sí sé que quiero que me encuentre contigo. 
   // canciones
   // startAt = segundo exacto desde donde arranca la canción (0 = inicio)
   const playlist = [
-    { title: 'Te Amo y Más.',   artist: 'Diego Luna',    trackId: '1392089755', startAt: 0 },
-    { title: 'Am I Losing You', artist: 'Bobby Vinton',  trackId: '1284129520', startAt: 47 },
-    { title: 'Sabor Caramelo',  artist: 'Milo J',        trackId: '2020541201', startAt: 180 },
+    { title: 'Amigo',   artist: 'Romeo Santos',    trackId: '137495976', startAt: 20 },
   ];
 
   // corazones de fondo
