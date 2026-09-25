@@ -252,17 +252,23 @@ a:focus-visible,button:focus-visible{
 }
 
 .scene-title{
+  position:relative;
+  z-index:5;
   font-size:clamp(1.5rem,6vw,2.1rem);
   color:var(--oscuro);
   margin-bottom:1rem;
+  text-shadow:0 0 10px rgba(255,255,255,.7), 0 0 3px rgba(255,255,255,.85);
 }
 .scene--night .scene-title{ color:var(--crema); }
 
 .scene-text{
+  position:relative;
+  z-index:5;
   font-size:clamp(1.05rem,4.4vw,1.18rem);
   line-height:1.75;
   color:var(--oscuro);
   margin:0 auto 1.6rem;
+  text-shadow:0 0 8px rgba(255,255,255,.6), 0 0 2px rgba(255,255,255,.8);
 }
 .scene--night .scene-text{ color:var(--crema); }
 
@@ -293,6 +299,7 @@ a:focus-visible,button:focus-visible{
   min-width:48px;
   cursor:pointer;
   position:relative;
+  z-index:5;
   transition:transform .25s ease, background .3s ease, color .3s ease;
 }
 .scene--night .scene-btn{ color:var(--crema); }
@@ -300,6 +307,8 @@ a:focus-visible,button:focus-visible{
 .scene-btn:active{ transform:translateY(0) scale(.98); }
 
 .scroll-hint{
+  position:relative;
+  z-index:5;
   margin-top:1.6rem;
   font-family:'Cinzel', serif;
   font-size:.68rem;
@@ -318,7 +327,7 @@ a:focus-visible,button:focus-visible{
   position:relative;
   width:min(55vw,220px);
   margin:0 auto 1.4rem;
-  z-index:2;
+  z-index:5;
   animation:dragon-in 1s ease both;
 }
 @keyframes dragon-in{
@@ -348,14 +357,15 @@ a:focus-visible,button:focus-visible{
   100%{ transform:translateY(120vh) rotate(340deg); opacity:0; }
 }
 
-/* Slots multimedia (foto / video) */
+/* Slots multimedia (foto / video) — SIEMPRE DETRÁS DEL TEXTO */
 .slot{
   position:absolute;
   top:var(--top,50%);
   left:var(--left,50%);
   width:var(--w,55%);
   transform:translate(-50%,-50%) rotate(var(--rot,0deg));
-  z-index:var(--z,3);
+  z-index:var(--z,-1);
+  pointer-events:none;
   animation:slot-in .8s ease both;
   animation-delay:var(--sd,.2s);
 }
@@ -376,10 +386,13 @@ a:focus-visible,button:focus-visible{
   color:var(--dorado);
   text-align:center;
   margin-top:.35rem;
+  text-shadow:0 0 6px rgba(255,255,255,.7);
 }
 
 /* Letrero escena 4 */
 .sign{
+  position:relative;
+  z-index:5;
   display:inline-block;
   border:1.5px solid var(--oscuro);
   padding:.7rem 1.1rem;
@@ -395,6 +408,7 @@ a:focus-visible,button:focus-visible{
 /* Sobre — Escena 7 */
 .envelope-stage{
   position:relative;
+  z-index:5;
   width:min(72vw,270px);
   aspect-ratio:3/2;
   margin:1.2rem auto 1.6rem;
@@ -459,6 +473,7 @@ a:focus-visible,button:focus-visible{
 
 .letter-scroll{
   position:relative;
+  z-index:5;
   max-width:24rem;
   margin:0 auto;
   padding:1.6rem 1.4rem;
@@ -578,7 +593,7 @@ a:focus-visible,button:focus-visible{
     <div class="scene-content">
       <div class="dragon-wrap dragon-idle">
         <!-- REEMPLAZAR CON TU IMAGEN: dragón sentado -->
-        <img src="/workspaces/God.Engine/Images/11.png" alt="Un pequeño dragón tierno sentado entre luciérnagas" loading="eager">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="Un pequeño dragón tierno sentado entre luciérnagas" loading="eager">
       </div>
       <h1 class="scene-title reveal" style="--d:.1s">Pssst… tú 👀💚</h1>
       <p class="scene-text">
@@ -597,7 +612,7 @@ a:focus-visible,button:focus-visible{
     <div class="scene-content">
       <div class="dragon-wrap dragon-idle">
         <!-- REEMPLAZAR CON TU IMAGEN: dragón caminando -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/dragon-caminando.png" alt="El pequeño dragón caminando por un sendero del bosque" loading="lazy">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="El pequeño dragón caminando por un sendero del bosque" loading="lazy">
       </div>
       <h2 class="scene-title">Sígueme…</h2>
       <p class="scene-text">
@@ -626,10 +641,12 @@ a:focus-visible,button:focus-visible{
       <!-- ESPACIO PARA FOTOGRAFÍA / RECUERDO — ESCENA 3 -->
       <!-- Puedes usar PNG transparente, WebP, GIF o video -->
       <!-- Ajusta --top / --left / --w / --rot / --z a tu gusto -->
+      <!-- IMPORTANTE: deja --z en 0 o negativo (ej. -1, -2) -->
+      <!-- para que la imagen quede SIEMPRE detrás del texto. -->
       <!-- ============================================= -->
-      <div class="slot" style="--top:50%;--left:50%;--w:64%;--rot:-3deg;--z:2;--sd:.15s;">
+      <div class="slot" style="--top:50%;--left:50%;--w:64%;--rot:-3deg;--z:-1;--sd:.15s;">
         <!-- REEMPLAZAR CON TU IMAGEN -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/recuerdo-1.png" alt="Un recuerdo especial compartido entre las dos">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="Un recuerdo especial compartido entre las dos">
         <p class="slot-caption">un recuerdo bonito</p>
       </div>
 
@@ -653,14 +670,15 @@ a:focus-visible,button:focus-visible{
 
       <!-- ============================================= -->
       <!-- ESPACIOS PARA 2–3 RECUERDOS — ESCENA 4 -->
+      <!-- --z en negativo: las imágenes quedan detrás del texto -->
       <!-- ============================================= -->
-      <div class="slot" style="--top:48%;--left:30%;--w:38%;--rot:-6deg;--z:2;--sd:.1s;">
+      <div class="slot" style="--top:48%;--left:30%;--w:38%;--rot:-6deg;--z:-2;--sd:.1s;">
         <!-- REEMPLAZAR CON TU IMAGEN -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/recuerdo-2.png" alt="Segundo recuerdo divertido">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="Segundo recuerdo divertido">
       </div>
-      <div class="slot" style="--top:58%;--left:70%;--w:38%;--rot:5deg;--z:3;--sd:.3s;">
+      <div class="slot" style="--top:58%;--left:70%;--w:38%;--rot:5deg;--z:-1;--sd:.3s;">
         <!-- REEMPLAZAR CON TU IMAGEN -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/recuerdo-3.png" alt="Tercer recuerdo divertido">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="Tercer recuerdo divertido">
       </div>
 
       <button class="scene-btn" type="button" data-next="5" style="margin-top:9rem;">😂 SIGAMOS</button>
@@ -675,7 +693,7 @@ a:focus-visible,button:focus-visible{
     <div class="scene-content">
       <div class="dragon-wrap">
         <!-- REEMPLAZAR CON TU IMAGEN: dragón sentado bajo un árbol -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/dragon-arbol.png" alt="El dragón sentado tranquilamente bajo un árbol">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="El dragón sentado tranquilamente bajo un árbol">
       </div>
       <h2 class="scene-title">🍃 Una pequeña pausa</h2>
       <p class="scene-text">
@@ -697,7 +715,7 @@ a:focus-visible,button:focus-visible{
     <div class="scene-content">
       <div class="dragon-wrap dragon-idle">
         <!-- REEMPLAZAR CON TU IMAGEN: dragón caminando con un sobre -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/dragon-sobre.png" alt="El dragón caminando de noche llevando un pequeño sobre">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/11.png?raw=true" alt="El dragón caminando de noche llevando un pequeño sobre">
       </div>
       <h2 class="scene-title">Ya casi llegamos… 🌙</h2>
       <p class="scene-text">
@@ -753,7 +771,7 @@ a:focus-visible,button:focus-visible{
     <div class="scene-content">
       <div class="dragon-wrap dragon-idle">
         <!-- REEMPLAZAR CON TU IMAGEN: dragón celebrando con globos -->
-        <img src="https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/imagenes/dragon-globos.png" alt="El dragón celebrando rodeado de globos y hojas">
+        <img src="https://github.com/Salxhi/God.Engine/blob/c4f93e05e65adff30329cb439af1d7ce9104a395/Images/12.png?raw=true" alt="El dragón celebrando rodeado de globos y hojas">
       </div>
       <h2 class="scene-title">🎂 Casi cumpleañera 💚</h2>
       <p class="scene-text">
