@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#030a06">
+<title>Para ti ♥</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://w.soundcloud.com/player/api.js"></script>
+
+<style>
+/* ============ RESET ============ */
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0}
+html,body{width:100%;min-height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:#030a06;
+  color:#d4f5e0;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+}
+
+/* ============ UNIVERSO DE FONDO ============ */
+#stars{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  display:block;
+}
+.aura{
+  position:fixed;
+  inset:-15%;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(34,197,94,.20), transparent 42%),
+    radial-gradient(circle at 82% 88%, rgba(74,222,128,.16), transparent 46%),
+    radial-gradient(circle at 50% 50%, rgba(16,185,129,.08), transparent 60%);
+  animation:auraShift 26s ease-in-out infinite alternate;
+  filter:blur(8px);
+}
+@keyframes auraShift{
+  0%{transform:translate3d(-4%,-3%,0) scale(1)}
+  100%{transform:translate3d(4%,5%,0) scale(1.15)}
+}
+
+/* ============ APP / PANTALLAS FULLSCREEN ============ */
+#app{
+  position:relative;
+  z-index:2;
+  width:100%;
+}
+.screen{
+  display:none;
+  width:100%;
+  min-height:100vh;
+  min-height:100dvh;
+  padding:64px 22px calc(56px + env(safe-area-inset-bottom, 0px));
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+.screen.active{
+  display:flex;
+  animation:screenIn .8s ease both;
+}
+@keyframes screenIn{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ============ TIPOGRAFÍA ============ */
+.tag{
+  font-size:.63rem;
+  letter-spacing:.48em;
+  text-transform:uppercase;
+  color:#4ade80;
+  margin-bottom:26px;
+  font-weight:500;
+  opacity:.85;
+}
+h1{
+  font-family:'Cormorant Garamond', Georgia, serif;
+  font-weight:400;
+  font-size:clamp(2.1rem, 9.5vw, 3.2rem);
+  line-height:1.15;
+  color:#eafff2;
+  letter-spacing:.01em;
+  text-shadow:0 0 34px rgba(74,222,128,.35);
+}
+h2{
+  font-family:'Cormorant Garamond', Georgia, serif;
+  font-weight:400;
+  font-size:clamp(1.45rem, 6.8vw, 2.1rem);
+  line-height:1.3;
+  color:#eafff2;
+  text-shadow:0 0 26px rgba(74,222,128,.25);
+  max-width:520px;
+}
+.sub{
+  margin-top:20px;
+  color:#7ab894;
+  font-size:.92rem;
+  font-weight:300;
+  line-height:1.65;
+  min-height:1.65em;
+  max-width:360px;
+}
+
+/* ============ BOTONES ============ */
+.btn{
+  font-family:inherit;
+  font-size:.82rem;
+  font-weight:500;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  padding:16px 34px;
+  border:1px solid #22c55e;
+  background:transparent;
+  color:#4ade80;
+  cursor:pointer;
+  transition:background .25s, color .25s, box-shadow .3s, transform .4s cubic-bezier(.34,1.56,.64,1), opacity .4s;
+  -webkit-appearance:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+.btn:active{transform:scale(.96)}
+.btn.primary{
+  background:#22c55e;
+  color:#04150c;
+  box-shadow:0 0 28px rgba(34,197,94,.4);
+}
+.btn.primary:hover{background:#4ade80; box-shadow:0 0 44px rgba(74,222,128,.65)}
+.btn.ghost{
+  border-color:rgba(74,222,128,.35);
+  color:#7ab894;
+  background:rgba(34,197,94,.04);
+}
+.btn.ghost:hover{border-color:#4ade80; color:#eafff2}
+
+/* ============ PANTALLA 1 — RESPUESTAS ============ */
+.answers{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  min-height:200px;
+  margin-top:36px;
+  flex-wrap:wrap;
+  width:100%;
+  max-width:420px;
+}
+
+.no-wrap{
+  display:inline-block;
+  transition:transform .09s cubic-bezier(.2,.9,.3,1.6);
+  will-change:transform;
+}
+#yesBtn{
+  transform-origin:center;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1), box-shadow .3s, background .25s;
+}
+.taunt{
+  font-size:.85rem;
+  color:#5a8a72;
+  letter-spacing:.04em;
+  min-height:1.4em;
+  font-style:italic;
+  margin-top:18px;
+  transition:color .3s;
+}
+
+/* ============ PANTALLA 2 — QUIZ ============ */
+.options{
+  display:grid;
+  gap:11px;
+  margin-top:34px;
+  width:100%;
+  max-width:460px;
+}
+.opt{
+  font-family:inherit;
+  font-size:.94rem;
+  font-weight:300;
+  text-align:left;
+  padding:17px 20px;
+  border:1px solid rgba(74,222,128,.22);
+  background:rgba(34,197,94,.04);
+  color:#c8e6d5;
+  cursor:pointer;
+  transition:border-color .22s, background .22s, transform .22s, color .22s;
+  line-height:1.4;
+  -webkit-appearance:none;
+}
+.opt:hover:not(:disabled){border-color:#4ade80; background:rgba(34,197,94,.14); transform:translateX(5px)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:#4ade80; background:rgba(34,197,94,.22); color:#bbf7d0}
+.opt.wrong{border-color:#f87171; background:rgba(248,113,113,.12); color:#fecaca}
+
+.feedback{
+  margin-top:26px;
+  font-size:.92rem;
+  line-height:1.7;
+  min-height:1.5em;
+  font-weight:300;
+  color:#7ab894;
+  max-width:440px;
+}
+.feedback.good{color:#86efac}
+.feedback.bad{color:#fca5a5}
+.hidden{display:none !important}
+#nextBtn{margin-top:28px; width:100%; max-width:340px}
+
+/* ============ PANTALLA 3 — CARTA FULLSCREEN ============ */
+#screen3,
+#screenLetter{
+  justify-content:flex-start;
+  padding-top:72px;
+  padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px));
+}
+.letter-wrap{
+  width:100%;
+  max-width:600px;
+  margin:0 auto;
+  text-align:left;
+}
+.letter-wrap > .tag{
+  display:block;
+  text-align:center;
+  margin-bottom:18px;
+}
+.letter-wrap > h1{
+  text-align:center;
+  margin-bottom:8px;
+}
+.divider{
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(74,222,128,.55), transparent);
+  margin:36px 0;
+}
+
+/* fotos */
+.photos{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:8px 0;
+}
+.photos img{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  display:block;
+  border:1px solid rgba(74,222,128,.2);
+  filter:saturate(.9) brightness(.92);
+  transition:filter .5s ease, transform .5s ease;
+}
+.photos img:first-child{
+  grid-column:span 2;
+  aspect-ratio:4/3;
+}
+.photos img:hover{filter:saturate(1.1) brightness(1.05); transform:scale(1.02)}
+
+/* texto de la carta */
+.letter{
+  font-family:'Cormorant Garamond', Georgia, serif;
+  font-size:clamp(1.14rem, 4.9vw, 1.3rem);
+  line-height:1.9;
+  font-weight:300;
+  color:#d4e8db;
+}
+.letter p{
+  margin-bottom:1.2em;
+  opacity:0;
+  animation:reveal .9s ease forwards;
+}
+@keyframes reveal{to{opacity:1}}
+.letter .lead{
+  font-size:1.35em;
+  color:#eafff2;
+  font-style:italic;
+}
+.letter .sign{
+  margin-top:2.4em;
+  text-align:right;
+  font-style:italic;
+  color:#86efac;
+  font-size:1.15em;
+  line-height:1.5;
+}
+
+/* ================================================================
+   TEMA DE COLOR POR CARTA PERSONALIZADA
+   ----------------------------------------------------------------
+   El color se inyecta desde JS con las variables --lc, --lc-soft
+   y --lc-glow en #letterWrap.
+
+   Para cambiar el color de UNA carta, edita el campo "color" de
+   esa carta en el array LETTERS (en el <script>).
+
+   El BRILLO (text-shadow) se calcula automáticamente a partir de
+   ese mismo color, así que no tienes que tocar nada más.
+   ================================================================ */
+#screenLetter .letter{
+  color: var(--lc, #d4e8db);
+  text-shadow:
+    0 0 6px  var(--lc-glow, rgba(74,222,128,.55)),
+    0 0 16px var(--lc-glow, rgba(74,222,128,.45)),
+    0 0 30px var(--lc-glow, rgba(74,222,128,.30));
+}
+#screenLetter .letter .lead{
+  color: var(--lc, #eafff2);
+  filter: brightness(1.35);
+  text-shadow:
+    0 0 8px  var(--lc-glow, rgba(74,222,128,.65)),
+    0 0 20px var(--lc-glow, rgba(74,222,128,.50)),
+    0 0 36px var(--lc-glow, rgba(74,222,128,.35));
+}
+#screenLetter .letter .sign{
+  color: var(--lc, #86efac);
+  filter: brightness(1.2);
+  text-shadow:
+    0 0 8px  var(--lc-glow, rgba(74,222,128,.65)),
+    0 0 20px var(--lc-glow, rgba(74,222,128,.50)),
+    0 0 36px var(--lc-glow, rgba(74,222,128,.35));
+}
+#screenLetter h1{
+  color: var(--lc, #eafff2);
+  text-shadow:
+    0 0 18px var(--lc-glow, rgba(74,222,128,.55)),
+    0 0 40px var(--lc-glow, rgba(74,222,128,.35));
+}
+#screenLetter .tag{
+  color: var(--lc, #4ade80);
+  opacity: .9;
+  text-shadow:
+    0 0 12px var(--lc-glow, rgba(74,222,128,.55)),
+    0 0 26px var(--lc-glow, rgba(74,222,128,.30));
+}
+#screenLetter .divider{
+  background: linear-gradient(90deg, transparent, var(--lc-soft, rgba(74,222,128,.55)), transparent);
+}
+#screenLetter .photos img{ border-color: var(--lc-soft, rgba(74,222,128,.2)); }
+#screenLetter .btn.primary{
+  background: var(--lc, #22c55e);
+  border-color: var(--lc, #22c55e);
+  color: #04150c;
+  box-shadow: 0 0 28px var(--lc-soft, rgba(34,197,94,.4));
+}
+#screenLetter .btn.primary:hover{
+  background: var(--lc, #4ade80);
+  box-shadow: 0 0 44px var(--lc-soft, rgba(74,222,128,.65));
+}
+#letterNext{ display:block; margin:36px auto 0; width:100%; max-width:340px; }
+
+/* ============ SOUNDCLOUD OCULTO ============ */
+#scPlayer{
+  position:fixed;
+  width:1px;
+  height:1px;
+  left:-9999px;
+  top:-9999px;
+  opacity:0;
+  pointer-events:none;
+  border:0;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:380px){
+  .screen{padding-left:16px;padding-right:16px}
+  .btn{padding:14px 26px;font-size:.76rem;letter-spacing:.16em}
+  .answers{min-height:220px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="aura"></div>
+
+<main id="app">
+
+  <!-- ============ PANTALLA 1 ============ -->
+  <section class="screen active" id="screen1">
+    <p class="tag">Prueba</p>
+    <h1 id="q1text">¿Tati, quieres ver la carta?</h1>
+    <p class="sub" id="q1sub">dale a no.</p>
+
+    <div class="answers" id="answers">
+      <button class="btn primary" id="yesBtn">Sí</button>
+      <div class="no-wrap" id="noWrap">
+        <button class="btn ghost" id="noBtn">No</button>
+      </div>
+    </div>
+
+    <p class="taunt" id="taunt"></p>
+  </section>
+
+  <!-- ============ PANTALLA 2 — QUIZ ============ -->
+  <section class="screen" id="screen2">
+    <p class="tag" id="quizTag">Aca van las preguntasss</p>
+    <h2 id="quizQ">...</h2>
+    <div class="options" id="quizOptions"></div>
+    <p class="feedback" id="quizFeedback"></p>
+    <button class="btn primary hidden" id="nextBtn">Siguiente</button>
+  </section>
+
+  <!-- ============ PANTALLA 2.5 — CARTA PERSONALIZADA ============ -->
+  <section class="screen" id="screenLetter">
+    <div class="letter-wrap" id="letterWrap">
+
+      <span class="tag" id="letterTag">Para Mochi</span>
+      <h1 id="letterTitle">Para ti, mi amor</h1>
+
+      <div class="divider"></div>
+
+      <div class="photos" id="letterPhotos"></div>
+      <div class="divider" id="letterPhotosDivider"></div>
+
+      <div class="letter" id="letterBody"></div>
+
+      <button class="btn primary" id="letterNext">Siguiente pregunta</button>
+
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA 3 — LA CARTA FINAL ============ -->
+  <section class="screen" id="screen3">
+    <div class="letter-wrap">
+
+      <span class="tag">Para Mochi</span>
+      <h1>Para ti, mi amor</h1>
+
+      <div class="divider"></div>
+
+      <div class="photos">
+        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
+        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
+        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
+        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
+        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="letter" id="letterText">
+
+        <p class="lead">Mi amor:</p>
+
+        <p>te quiero dar.</p>
+
+        <p>Aqui iria la carta de tati.</p>
+
+        <p class="sign">
+          Siempre tuyo,<br>
+          tu hombreeeeee
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ============================================================
+   UNIVERSO DE FONDO — ESTRELLAS + COMETAS (verde)
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+  let stars = [];
+  let comets = [];
+  let lastComet = 0;
+  let nextCometDelay = 1200;
+  let started = false;
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width  = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    buildStars();
+  }
+
+  function buildStars(){
+    stars = [];
+    const count = Math.min(280, Math.max(90, Math.floor((W * H) / 3800)));
+    for (let i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.15 + 0.25,
+        baseAlpha: Math.random() * 0.5 + 0.35,
+        twinkleSpeed: Math.random() * 0.0016 + 0.0004,
+        phase: Math.random() * Math.PI * 2,
+        green: Math.random() < 0.7
+      });
+    }
+  }
+
+  function spawnComet(){
+    const fromLeft = Math.random() > 0.5;
+    const startX = fromLeft ? -90 : W + 90;
+    const startY = Math.random() * H * 0.55;
+    const speed  = 3.4 + Math.random() * 3.4;
+    const angle  = fromLeft
+      ? (0.32 + Math.random() * 0.14)
+      : (Math.PI - 0.32 - Math.random() * 0.14);
+    comets.push({
+      x: startX,
+      y: startY,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      tail: 100 + Math.random() * 150,
+      width: 0.9 + Math.random() * 1.4,
+      headR: 1.4 + Math.random() * 1.3
+    });
+  }
+
+  function frame(t){
+    if (!started){ lastComet = t; started = true; }
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (let i = 0; i < stars.length; i++){
+      const s = stars[i];
+      const tw = 0.6 + 0.4 * Math.sin(t * s.twinkleSpeed + s.phase);
+      const a  = s.baseAlpha * tw;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.green
+        ? 'rgba(150,255,190,' + a.toFixed(3) + ')'
+        : 'rgba(225,245,235,' + a.toFixed(3) + ')';
+      ctx.fill();
+    }
+
+    if (t - lastComet > nextCometDelay){
+      lastComet = t;
+      nextCometDelay = 1400 + Math.random() * 2800;
+      spawnComet();
+      if (Math.random() > 0.72) spawnComet();
+    }
+
+    for (let i = comets.length - 1; i >= 0; i--){
+      const c = comets[i];
+      c.x += c.vx;
+      c.y += c.vy;
+
+      if (c.x < -260 || c.x > W + 260 || c.y > H + 260){
+        comets.splice(i, 1);
+        continue;
+      }
+
+      const ang = Math.atan2(c.vy, c.vx);
+      const tailX = c.x - Math.cos(ang) * c.tail;
+      const tailY = c.y - Math.sin(ang) * c.tail;
+
+      const grad = ctx.createLinearGradient(c.x, c.y, tailX, tailY);
+      grad.addColorStop(0,    'rgba(190,255,215,0.95)');
+      grad.addColorStop(0.14, 'rgba(74,222,128,0.70)');
+      grad.addColorStop(0.50, 'rgba(34,197,94,0.22)');
+      grad.addColorStop(1,    'rgba(34,197,94,0)');
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = c.width;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(c.x, c.y);
+      ctx.lineTo(tailX, tailY);
+      ctx.stroke();
+
+      const glow = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.headR * 7);
+      glow.addColorStop(0,   'rgba(210,255,225,0.9)');
+      glow.addColorStop(0.30,'rgba(74,222,128,0.35)');
+      glow.addColorStop(1,   'rgba(74,222,128,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.headR * 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.headR, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(235,255,245,1)';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', function(){ setTimeout(resize, 200); });
+  requestAnimationFrame(frame);
+})();
+
+/* ============================================================
+   NAVEGACIÓN ENTRE PANTALLAS
+   ============================================================ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   PANTALLA 1 — LA PREGUNTA DEL "NO"
+   ============================================================ */
+const q1text = document.getElementById('q1text');
+const q1sub  = document.getElementById('q1sub');
+const taunt  = document.getElementById('taunt');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn  = document.getElementById('noBtn');
+const noWrap = document.getElementById('noWrap');
+const answers = document.getElementById('answers');
+
+const QUESTIONS = [
+  '',
+  '¿ENSERIO DICES QUE NO?',
+  '¿OTRA VEZ TATIANA?',
+  'Mmmm ¿Ahora sí?',
+  'Ya tati, ¿la ultima?',
+  'TATIANA, !QUE SI!',
+  '¿Ahora si?',
+];
+
+const TAUNTS = [
+  '¿ENSERIO DICES QUE NO?',
+  '¿OTRA VEZ TATIANA?',
+  'Mmmm ¿Ahora sí?',
+  'Ya tati, ¿la ultima?',
+  'TATIANA, !QUE SI!',
+];
+
+let noCount = 0;
+
+let noPosX = 0;
+let noPosY = 0;
+
+function moveNoButton(){
+  const margin = 14;
+
+  const wrap = noWrap.getBoundingClientRect();
+
+  const w = wrap.width  || noWrap.offsetWidth  || 90;
+  const h = wrap.height || noWrap.offsetHeight || 48;
+
+  const naturalLeft = wrap.left - noPosX;
+  const naturalTop  = wrap.top  - noPosY;
+
+  const maxX = Math.max(margin, window.innerWidth  - w - margin);
+  const maxY = Math.max(margin, window.innerHeight - h - margin);
+
+  const curX = wrap.left;
+  const curY = wrap.top;
+
+  let bestDist = -1;
+  let targetX = margin;
+  let targetY = margin;
+
+  for (let i = 0; i < 30; i++){
+    const tx = margin + Math.random() * (maxX - margin);
+    const ty = margin + Math.random() * (maxY - margin);
+    const d  = Math.hypot(tx - curX, ty - curY);
+    if (d > bestDist){
+      bestDist = d;
+      targetX = tx;
+      targetY = ty;
+    }
+  }
+
+  noPosX = targetX - naturalLeft;
+  noPosY = targetY - naturalTop;
+
+  noWrap.style.transform = 'translate(' + noPosX.toFixed(1) + 'px, ' +
+                                            noPosY.toFixed(1) + 'px)';
+}
+
+noBtn.addEventListener('click', function(){
+  noCount++;
+
+  const qi = Math.min(noCount, QUESTIONS.length - 1);
+  q1text.textContent = QUESTIONS[qi];
+
+  const ti = Math.min(noCount - 1, TAUNTS.length - 1);
+  taunt.textContent = TAUNTS[ti];
+
+  moveNoButton();
+
+  const yesScale = Math.min(1.85, 1 + noCount * 0.15);
+  yesBtn.style.transform = 'scale(' + yesScale.toFixed(2) + ')';
+
+  if (noCount >= 6){
+    noBtn.style.opacity = '0';
+    noBtn.style.pointerEvents = 'none';
+    q1sub.textContent = 'el boton de no desapareció';
+    taunt.textContent = 'Te lo dije';
+    yesBtn.style.transform = 'scale(1.85)';
+  } else {
+    q1sub.textContent = '';
+  }
+});
+
+yesBtn.addEventListener('click', function(){
+  showScreen('screen2');
+  renderQuiz();
+});
+
+/* ============================================================
+   PANTALLA 2 — LAS 5 PREGUNTAS
+   ============================================================ */
+const QUIZ = [
+  {
+    q: 'Segun la hora de tu celular ¿Ya naciste??',
+    options: ['Si', 'Si'],
+    correct: 1,
+    ok:  'Muy bien tati, feliz cumpleaños',
+    bad: 'Muy bien tati, feliz cumpleaños'
+  },
+  {
+    q: '¿A quien quiere mas Gisell?',
+    options: ['A Janes', 'A Karent', 'A Tatiana', 'A Juan David','A todos excepto Tati'],
+    correct: 2,
+    ok:  'Muy bien tati, aqui te va mi carta.',
+    bad: 'Mal tati, obvio tu.'
+  },
+  {
+    q: 'Cual es la pelicula favorita de Karent?',
+    options: ['Ratatouille','Barbie','La princesa y el sapo','Mafalda'],
+    correct: 2,
+    ok:  '¡Bien, Tati! Te amo mucho, guapa, Grrr.',
+    bad: '!Mal, Tati! Mal, muy mal. Pero bueno... Te sigo amando, guapa, Grrr.'
+  },
+  {
+    q: '¿Cuánto te quiero?',
+    options: ['Un poquito', 'Bastante', 'Mucho', 'Más de lo que se puede medir'],
+    correct: 3,
+    ok:  'Más de lo que se puede medir. No había otra respuesta posible.',
+    bad: 'Te quedaste corta. La respuesta correcta es: más de lo que se puede medir.'
+  },
+  {
+    q: 'Última pregunta... ¿te quedas conmigo?',
+    options: ['Sí', 'Obvio sí', 'Siempre sí', 'Todas las anteriores'],
+    correct: 3,
+    ok:  'Todas las anteriores. Gracias por quedarte.',
+    bad: 'Mmm, acepto esa respuesta, pero la correcta era "todas las anteriores".'
+  }
+];
+
+const quizTag      = document.getElementById('quizTag');
+const quizQ        = document.getElementById('quizQ');
+const quizOptions  = document.getElementById('quizOptions');
+const quizFeedback = document.getElementById('quizFeedback');
+const nextBtn      = document.getElementById('nextBtn');
+
+let qIndex = 0;
+
+function renderQuiz(){
+  const item = QUIZ[qIndex];
+  quizTag.textContent = 'pruebass / Pregunta ' + (qIndex + 1) + ' de ' + QUIZ.length;
+  quizQ.textContent = item.q;
+  quizOptions.innerHTML = '';
+  quizFeedback.textContent = '';
+  quizFeedback.className = 'feedback';
+  nextBtn.classList.add('hidden');
+  /* Si es la última pregunta, el botón lleva a la carta final.
+     Si es la primera, salta directo a la siguiente (no tiene carta).
+     En el resto, dice "Ver tu carta". */
+  if (qIndex === QUIZ.length - 1) {
+    nextBtn.textContent = 'Ver tu carta';
+  } else if (qIndex === 0) {
+    nextBtn.textContent = 'Siguiente';
+  } else {
+    nextBtn.textContent = 'Ver tu carta';
+  }
+
+  item.options.forEach(function(opt, i){
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.type = 'button';
+    b.textContent = opt;
+    b.addEventListener('click', function(){ answerQuiz(i, b); });
+    quizOptions.appendChild(b);
+  });
+}
+
+function answerQuiz(i, btn){
+  const item = QUIZ[qIndex];
+  const all = Array.prototype.slice.call(quizOptions.children);
+  all.forEach(function(b){ b.disabled = true; });
+
+  if (i === item.correct){
+    btn.classList.add('correct');
+    quizFeedback.textContent = item.ok;
+    quizFeedback.className = 'feedback good';
+  } else {
+    btn.classList.add('wrong');
+    all[item.correct].classList.add('correct');
+    quizFeedback.textContent = item.bad;
+    quizFeedback.className = 'feedback bad';
+  }
+
+  nextBtn.classList.remove('hidden');
+}
+
+nextBtn.addEventListener('click', function(){
+  /* Pregunta 1 (index 0): NO muestra carta, pasa directo a la 2 */
+  if (qIndex === 0){
+    qIndex++;
+    showScreen('screen2');
+    renderQuiz();
+    return;
+  }
+  /* Preguntas 2-5: muestran carta personalizada */
+  openLetter(qIndex);
+});
+
+/* ================================================================================
+   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+   ▓                                                                              ▓
+   ▓   AQUÍ EDITAS LAS CARTAS PERSONALIZADAS (una por pregunta 2, 3, 4 y 5)      ▓
+   ▓                                                                              ▓
+   ▓   Cada carta es TOTALMENTE INDEPENDIENTE. Tiene:                             ▓
+   ▓                                                                              ▓
+   ▓   color  →  ← ¡AQUÍ CAMBIAS EL COLOR DE LA FUENTE! (hex, ej: '#ffc9de')      ▓
+   ▓   track  →  link de SoundCloud de ESA carta (independiente)                  ▓
+   ▓   photos →  array con los links de las fotos de ESA carta                    ▓
+   ▓   tag    →  texto pequeño arriba del título                                  ▓
+   ▓   title  →  título grande de la carta                                        ▓
+   ▓   body   →  array de párrafos (el primero sale como "lead" en cursiva)       ▓
+   ▓   sign   →  firma del final (puedes usar <br> para saltos de línea)          ▓
+   ▓                                                                              ▓
+   ▓   El índice 0 (pregunta 1) está en null porque NO tiene carta.               ▓
+   ▓                                                                              ▓
+   ▓   NOTA: el BRILLO de las letras se calcula automáticamente a partir del      ▓
+   ▓   mismo color que pongas arriba. No hay que configurarlo aparte.             ▓
+   ▓                                                                              ▓
+   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+   ================================================================================ */
+const LETTERS = [
+
+  /* ---- PREGUNTA 1 → sin carta (no tocar) ---- */
+  null,
+
+  /* ================== PREGUNTA 2 → CARTA 1 ================== */
+  {
+    /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
+    color: '#B50000',
+    /* ▲▲▲ COLOR DE LA FUENTE DE ESTA CARTA ▲▲▲ */
+
+    track: 'https://api.soundcloud.com/tracks/125170127',
+
+    photos: [
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png'
+    ],
+
+    tag:   null,
+    title: 'Para Tati',
+
+    body: [
+  `Hola Tati, cómo estás?, si sabías que hoy es tú cumpleaños?.........
+Bno la cuestión es que oficialmente ya te puedo demandar por acoso, jajajajaja, no mentira mi Tati, sé que ha llevamos poco tiempo de habernos conocido, y que casi no nos conocemos, pero yo siento que te conozco desde toda mi corta estancia en el SENA, jaja, espero que ahora que ya eres una adulta responsable no me saques canas verdes al momento de preguntarme cosas sobre las tablas de amortización, ya que considero que serass lo suficientemente adulta como para distinguir entre una tabla de valor presente y una de valor futuro. 
+Pero bueno ..
+No vayas a dejar de ser tu misma, pq hasta ahora estás en tu pleno esplendor, para conocer nuevas personas, para vivir experiencias nuevas, y para saber cuántos pares son 3 moscas. Así que Tati i love you 💕✨, FELIZ CUMPLEAÑOOOOOOOS TO YOU
+  Te quiero mucho Tati y 🎺doy gracias al cielo por haberte conocido, por haberte conocido doy gracias al cielo,y le canto a las estrellas lo bonito que sentí,lo bonito que sentí cuando te conocí 🎺`
+    ],
+
+    sign:  'Gisell'
+  },
+
+  /* ================== PREGUNTA 3 → CARTA 2 ================== */
+  {
+    /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
+    color: '#C2A223',
+    /* ▲▲▲ COLOR DE LA FUENTE DE ESTA CARTA ▲▲▲ */
+
+    track: 'https://api.soundcloud.com/tracks/125170127',
+
+    photos: [
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png'
+    ],
+
+    tag:   '',
+    title: 'Para Tati',
+
+    body: [
+      `Hola, Tati mi amor, Guapa Grr, bella. ❤️🥹
+
+Si estás leyendo esto, significa que por fin llegó tu día. Después de tantos días contando, de decir “faltan 16”, “faltan 10”, “faltan 5”… llegó el momento que tanto estábamos esperando: el día 1 ya pasó y hoy es tu cumpleaños. 🎂✨
+
+Hoy cumples 18 años, y aunque pueda parecer simplemente un número más, para mí significa muchísimo, porque estoy teniendo la oportunidad de celebrar la vida de una persona que quiero muchísimo y que se ha convertido en alguien demasiado especial para mí.
+
+Quería escribirte esta carta porque no quería que este día pasara sin recordarte lo importante que eres para mí. A veces uno no encuentra las palabras exactas para explicar lo que siente por una persona, pero hoy quiero intentarlo, porque tú mereces saber todo lo bonito que significas para mí. ❤️
+
+Me alegra muchísimo haberte conocido. Me alegra cada conversación, cada risa, cada momento, cada molestadera y hasta esos pequeños momentos que quizás parecen insignificantes, pero que para mí terminan convirtiéndose en recuerdos muy bonitos. Porque al final, son esas pequeñas cosas las que hacen que una persona se vuelva especial.
+
+Hoy quiero que disfrutes muchísimo tu cumpleaños. Quiero que sonrías, que te consientan, que recibas mucho cariño y que puedas sentir lo especial que eres para las personas que te queremos. Espero que este nuevo año de vida te traiga muchísimas cosas bonitas, sueños cumplidos, nuevas experiencias, momentos inolvidables y personas que siempre sepan valorar el corazón tan bonito que tienes.
+
+Ahora que tienes 18 años, comienza una etapa diferente, llena de nuevas experiencias, decisiones, sueños y caminos. Y de corazón deseo que cada paso que des te acerque a todo aquello que deseas conseguir. Nunca dejes de ser tú, nunca pierdas esa esencia que te hace ser Tati, y nunca olvides que tienes muchísimo por vivir y disfrutar. ✨
+
+También quiero agradecerte por formar parte de mi vida. Puede que no siempre te diga todo lo que significas para mí, pero eso no quiere decir que no lo sienta. Hay personas que simplemente llegan y terminan ocupando un espacio que no sabíamos que estaba esperando por ellas, y tú tienes uno de esos espacios en mi corazón. ❤️
+
+Y pensar que hace unos días todavía estábamos contando cuánto faltaba para este momento… y ahora puedo decirte que ya llegó tu cumpleaños número 18. 🥹🎂
+
+Espero que cuando leas esta carta sonrías aunque sea un poquito, porque esa es una de las cosas que más quiero: verte feliz. Y espero que cuando recuerdes este cumpleaños, recuerdes también que hubo alguien que estaba muy emocionado por la llegada de tu día y que quiso dejarte unas palabras para que las conservaras.
+
+Así que hoy no quiero hablar de cuánto falta, porque por primera vez después de tantos días no falta nada.
+
+Hoy es tu día. ❤️
+
+Feliz cumpleaños, Tati. Feliz vida. Felices 18. 🥹🎂✨
+
+Te quiero muchísimo, mi amor, guapa Grr, bella. Espero que esta nueva etapa sea increíble para ti y que la vida te regale muchísimos motivos para sonreír.
+
+Y recuerda algo: este es apenas el comienzo de todo lo bonito que todavía te queda por vivir. ❤️
+
+Con muchísimo cariño,
+para ti, Tati. 🥹❤️🎂✨`
+    ],
+
+    sign:  'Karent'
+  },
+
+  /* ================== PREGUNTA 4 → CARTA 3 ================== */
+  {
+    /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
+    color: '#a8d8ff',
+    /* ▲▲▲ COLOR DE LA FUENTE DE ESTA CARTA ▲▲▲ */
+
+    track: 'https://api.soundcloud.com/tracks/125170127',
+
+    photos: [
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png'
+    ],
+
+    tag:   'Para tati',
+    title: 'Para ti, mi amor',
+
+    body: [
+      'Mi amor:',
+      'te quiero dar.',
+      'Aqui iria la carta de tati.'
+    ],
+
+    sign:  'Siempre tuyo,<br>tu hombreeeeee'
+  },
+
+  /* ================== PREGUNTA 5 → CARTA 4 ================== */
+  {
+    /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
+    color: '#d9b8ff',
+    /* ▲▲▲ COLOR DE LA FUENTE DE ESTA CARTA ▲▲▲ */
+
+    track: 'https://api.soundcloud.com/tracks/125170127',
+
+    photos: [
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
+      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png'
+    ],
+
+    tag:   'Para tati',
+    title: 'Para ti, mi amor',
+
+    body: [
+      'Mi amor:',
+      'te quiero dar.',
+      'Aqui iria la carta de tati.'
+    ],
+
+    sign:  'Siempre tuyo,<br>tu hombreeeeee'
+  }
+
+];
+
+/* ============================================================
+   Render de la carta personalizada (no tocar)
+   ============================================================ */
+const letterWrap          = document.getElementById('letterWrap');
+const letterTagEl         = document.getElementById('letterTag');
+const letterTitleEl       = document.getElementById('letterTitle');
+const letterPhotosEl      = document.getElementById('letterPhotos');
+const letterPhotosDivider = document.getElementById('letterPhotosDivider');
+const letterBody          = document.getElementById('letterBody');
+const letterNext          = document.getElementById('letterNext');
+
+function openLetter(i){
+  const L = LETTERS[i];
+  if (!L) return;
+
+  /* Color del tema de esta carta (y sus variantes para brillo/bordes) */
+  const color = L.color || '#d4e8db';
+  letterWrap.style.setProperty('--lc', color);
+  letterWrap.style.setProperty('--lc-soft', color + '66');   /* bordes y divisores */
+  letterWrap.style.setProperty('--lc-glow', color + 'b3');   /* brillo de las letras (~70%) */
+
+  /* Tag y título propios de esta carta */
+  letterTagEl.textContent   = L.tag   || 'Para tati';
+  letterTitleEl.textContent = L.title || 'Para ti, mi amor';
+
+  /* Fotos propias de esta carta */
+  const photos = L.photos || [];
+  letterPhotosEl.innerHTML = '';
+  photos.forEach(function(src){
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Nosotros';
+    img.loading = 'lazy';
+    letterPhotosEl.appendChild(img);
+  });
+  letterPhotosEl.style.display      = photos.length ? '' : 'none';
+  letterPhotosDivider.style.display = photos.length ? '' : 'none';
+
+  /* Texto propio de esta carta */
+  letterBody.innerHTML = '';
+  (L.body || []).forEach(function(txt, idx){
+    const p = document.createElement('p');
+    p.innerHTML = txt;
+    if (idx === 0) p.classList.add('lead');
+    p.style.animation = 'none';
+    void p.offsetWidth;
+    p.style.animation = '';
+    p.style.animationDelay = (idx * 0.3).toFixed(2) + 's';
+    letterBody.appendChild(p);
+  });
+
+  const sign = document.createElement('p');
+  sign.className = 'sign';
+  sign.innerHTML = L.sign || '';
+  sign.style.animation = 'none';
+  void sign.offsetWidth;
+  sign.style.animation = '';
+  sign.style.animationDelay = ((L.body || []).length * 0.3).toFixed(2) + 's';
+  letterBody.appendChild(sign);
+
+  /* Texto del botón según corresponda */
+  letterNext.textContent = (i >= QUIZ.length - 1)
+    ? 'Abrir la carta final'
+    : 'Siguiente pregunta';
+
+  showScreen('screenLetter');
+  playTrack(L.track);
+}
+
+letterNext.addEventListener('click', function(){
+  stopTrack();
+  qIndex++;
+  if (qIndex >= QUIZ.length){
+    showScreen('screen3');
+    startLetter();
+  } else {
+    showScreen('screen2');
+    renderQuiz();
+  }
+});
+
+/* ============================================================
+   MÚSICA (SoundCloud) — una canción distinta por carta
+   ============================================================ */
+let currentWidget = null;
+
+function stopTrack(){
+  const old = document.getElementById('scPlayer');
+  if (old) old.remove();
+  currentWidget = null;
+}
+
+function playTrack(url){
+  stopTrack();
+  if (!url) return;
+
+  const iframe = document.createElement('iframe');
+  iframe.id = 'scPlayer';
+  iframe.setAttribute('scrolling', 'no');
+  iframe.setAttribute('frameborder', 'no');
+  iframe.setAttribute('allow', 'autoplay');
+  iframe.src = 'https://w.soundcloud.com/player/?url=' +
+    encodeURIComponent(url) +
+    '&color=%234ade80&auto_play=true&hide_related=true' +
+    '&show_comments=false&show_user=false&show_reposts=false&visual=false';
+
+  document.body.appendChild(iframe);
+
+  try {
+    if (window.SC && SC.Widget){
+      currentWidget = SC.Widget(iframe);
+      currentWidget.bind(SC.Widget.Events.READY, function(){
+        try {
+          currentWidget.setVolume(70);
+          currentWidget.play();
+        } catch(e){}
+      });
+    }
+  } catch(e){}
+}
+
+/* ============================================================
+   PANTALLA 3 — CARTA FINAL + MÚSICA
+   ============================================================ */
+const FINAL_TRACK = 'https://api.soundcloud.com/tracks/125170127';
+
+function startLetter(){
+  playTrack(FINAL_TRACK);
+
+  const paras = document.querySelectorAll('#letterText p');
+  paras.forEach(function(p, i){
+    p.style.animation = 'none';
+    void p.offsetWidth;
+    p.style.animation = '';
+    p.style.animationDelay = (i * 0.3) + 's';
+  });
+}
+</script>
+</body>
+</html>
