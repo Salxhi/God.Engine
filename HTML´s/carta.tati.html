@@ -224,8 +224,7 @@ h2{
 .hidden{display:none !important}
 #nextBtn{margin-top:28px; width:100%; max-width:340px}
 
-/* ============ PANTALLA 3 — CARTA FULLSCREEN ============ */
-#screen3,
+/* ============ CARTA FULLSCREEN ============ */
 #screenLetter{
   justify-content:flex-start;
   padding-top:72px;
@@ -252,7 +251,9 @@ h2{
   margin:36px 0;
 }
 
-/* fotos */
+/* ================================================================
+   FOTOS — TODAS EN FORMATO 1:1 (cuadradas)
+   ================================================================ */
 .photos{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -261,7 +262,7 @@ h2{
 }
 .photos img{
   width:100%;
-  aspect-ratio:3/4;
+  aspect-ratio:1 / 1;
   object-fit:cover;
   display:block;
   border:1px solid rgba(74,222,128,.2);
@@ -270,7 +271,7 @@ h2{
 }
 .photos img:first-child{
   grid-column:span 2;
-  aspect-ratio:4/3;
+  aspect-ratio:1 / 1;
 }
 .photos img:hover{filter:saturate(1.1) brightness(1.05); transform:scale(1.02)}
 
@@ -307,12 +308,6 @@ h2{
    ----------------------------------------------------------------
    El color se inyecta desde JS con las variables --lc, --lc-soft
    y --lc-glow en #letterWrap.
-
-   Para cambiar el color de UNA carta, edita el campo "color" de
-   esa carta en el array LETTERS (en el <script>).
-
-   El BRILLO (text-shadow) se calcula automáticamente a partir de
-   ese mismo color, así que no tienes que tocar nada más.
    ================================================================ */
 #screenLetter .letter{
   color: var(--lc, #d4e8db);
@@ -418,7 +413,7 @@ h2{
     <button class="btn primary hidden" id="nextBtn">Siguiente</button>
   </section>
 
-  <!-- ============ PANTALLA 2.5 — CARTA PERSONALIZADA ============ -->
+  <!-- ============ PANTALLA 2.5 — CARTA (personalizada y final) ============ -->
   <section class="screen" id="screenLetter">
     <div class="letter-wrap" id="letterWrap">
 
@@ -433,43 +428,6 @@ h2{
       <div class="letter" id="letterBody"></div>
 
       <button class="btn primary" id="letterNext">Siguiente pregunta</button>
-
-    </div>
-  </section>
-
-  <!-- ============ PANTALLA 3 — LA CARTA FINAL ============ -->
-  <section class="screen" id="screen3">
-    <div class="letter-wrap">
-
-      <span class="tag">Para Mochi</span>
-      <h1>Para ti, mi amor</h1>
-
-      <div class="divider"></div>
-
-      <div class="photos">
-        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
-        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
-        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
-        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
-        <img src="https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png" alt="Nosotros" loading="lazy">
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="letter" id="letterText">
-
-        <p class="lead">Mi amor:</p>
-
-        <p>te quiero dar.</p>
-
-        <p>Aqui iria la carta de tati.</p>
-
-        <p class="sign">
-          Siempre tuyo,<br>
-          tu hombreeeeee
-        </p>
-
-      </div>
 
     </div>
   </section>
@@ -726,7 +684,7 @@ yesBtn.addEventListener('click', function(){
 });
 
 /* ============================================================
-   PANTALLA 2 — LAS 5 PREGUNTAS
+   PANTALLA 2 — LAS 4 PREGUNTAS
    ============================================================ */
 const QUIZ = [
   {
@@ -751,18 +709,11 @@ const QUIZ = [
     bad: '!Mal, Tati! Mal, muy mal. Pero bueno... Te sigo amando, guapa, Grrr.'
   },
   {
-    q: '¿Cuánto te quiero?',
-    options: ['Un poquito', 'Bastante', 'Mucho', 'Más de lo que se puede medir'],
+    q: '¿Cual es el granizado favorito de Janis?',
+    options: ['Lulo', 'Sandia', 'Mora azul', 'Ninguno'],
     correct: 3,
-    ok:  'Más de lo que se puede medir. No había otra respuesta posible.',
-    bad: 'Te quedaste corta. La respuesta correcta es: más de lo que se puede medir.'
-  },
-  {
-    q: 'Última pregunta... ¿te quedas conmigo?',
-    options: ['Sí', 'Obvio sí', 'Siempre sí', 'Todas las anteriores'],
-    correct: 3,
-    ok:  'Todas las anteriores. Gracias por quedarte.',
-    bad: 'Mmm, acepto esa respuesta, pero la correcta era "todas las anteriores".'
+    ok:  'Muy bien Tati, que buena marida.',
+    bad: 'No me conoces Tati.. Mmm ya.'
   }
 ];
 
@@ -782,12 +733,9 @@ function renderQuiz(){
   quizFeedback.textContent = '';
   quizFeedback.className = 'feedback';
   nextBtn.classList.add('hidden');
-  /* Si es la última pregunta, el botón lleva a la carta final.
-     Si es la primera, salta directo a la siguiente (no tiene carta).
-     En el resto, dice "Ver tu carta". */
-  if (qIndex === QUIZ.length - 1) {
-    nextBtn.textContent = 'Ver tu carta';
-  } else if (qIndex === 0) {
+  /* Pregunta 1 → pasa directo a la 2 (sin carta).
+     Preguntas 2, 3 y 4 → abren su carta. */
+  if (qIndex === 0) {
     nextBtn.textContent = 'Siguiente';
   } else {
     nextBtn.textContent = 'Ver tu carta';
@@ -830,14 +778,14 @@ nextBtn.addEventListener('click', function(){
     renderQuiz();
     return;
   }
-  /* Preguntas 2-5: muestran carta personalizada */
+  /* Preguntas 2-4: muestran carta */
   openLetter(qIndex);
 });
 
 /* ================================================================================
    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
    ▓                                                                              ▓
-   ▓   AQUÍ EDITAS LAS CARTAS PERSONALIZADAS (una por pregunta 2, 3, 4 y 5)      ▓
+   ▓   AQUÍ EDITAS LAS CARTAS (una por pregunta 2, 3 y 4)                        ▓
    ▓                                                                              ▓
    ▓   Cada carta es TOTALMENTE INDEPENDIENTE. Tiene:                             ▓
    ▓                                                                              ▓
@@ -850,6 +798,7 @@ nextBtn.addEventListener('click', function(){
    ▓   sign   →  firma del final (puedes usar <br> para saltos de línea)          ▓
    ▓                                                                              ▓
    ▓   El índice 0 (pregunta 1) está en null porque NO tiene carta.               ▓
+   ▓   El índice 3 (pregunta 4) es la ÚLTIMA: al terminar, el botón dirá "Fin".   ▓
    ▓                                                                              ▓
    ▓   NOTA: el BRILLO de las letras se calcula automáticamente a partir del      ▓
    ▓   mismo color que pongas arriba. No hay que configurarlo aparte.             ▓
@@ -861,7 +810,7 @@ const LETTERS = [
   /* ---- PREGUNTA 1 → sin carta (no tocar) ---- */
   null,
 
-  /* ================== PREGUNTA 2 → CARTA 1 ================== */
+  /* ================== PREGUNTA 2 → CARTA 1 (Gisell) ================== */
   {
     /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
     color: '#B50000',
@@ -891,7 +840,7 @@ No vayas a dejar de ser tu misma, pq hasta ahora estás en tu pleno esplendor, p
     sign:  'Gisell'
   },
 
-  /* ================== PREGUNTA 3 → CARTA 2 ================== */
+  /* ================== PREGUNTA 3 → CARTA 2 (Karent) ================== */
   {
     /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
     color: '#C2A223',
@@ -900,11 +849,11 @@ No vayas a dejar de ser tu misma, pq hasta ahora estás en tu pleno esplendor, p
     track: 'https://api.soundcloud.com/tracks/125170127',
 
     photos: [
-      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
-      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
-      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
-      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png',
-      'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png'
+      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/karent1.jpg?raw=true',
+      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/karent2.jpg?raw=true',
+      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/karent3.jpg?raw=true',
+      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/karent4.jpg?raw=true',
+      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/karent5.jpg?raw=true'
     ],
 
     tag:   '',
@@ -948,38 +897,10 @@ para ti, Tati. 🥹❤️🎂✨`
     sign:  'Karent'
   },
 
-  /* ================== PREGUNTA 4 → CARTA 3 ================== */
+  /* ================== PREGUNTA 4 → CARTA 3 (LA ÚLTIMA / FINAL) ================== */
   {
     /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
-    color: '#a8d8ff',
-    /* ▲▲▲ COLOR DE LA FUENTE DE ESTA CARTA ▲▲▲ */
-
-    track: 'https://api.soundcloud.com/tracks/125170127',
-
-    photos: [
-      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/gisell1.jpg?raw=true',
-      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/gisell3.jpg?raw=true',
-      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/gisell4.png?raw=true',
-      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/gisell4.png?raw=true',
-      'https://github.com/Salxhi/God.Engine/blob/main/images_cache/gisell5.png?raw=true'
-    ],
-
-    tag:   'Para tati',
-    title: 'Para ti, mi amor',
-
-    body: [
-      'Mi amor:',
-      'te quiero dar.',
-      'Aqui iria la carta de tati.'
-    ],
-
-    sign:  'Siempre tuyo,<br>tu hombreeeeee'
-  },
-
-  /* ================== PREGUNTA 5 → CARTA 4 ================== */
-  {
-    /* ▼▼▼ COLOR DE LA FUENTE DE ESTA CARTA ▼▼▼ */
-    color: '#d9b8ff',
+    color: '#2388C2',
     /* ▲▲▲ COLOR DE LA FUENTE DE ESTA CARTA ▲▲▲ */
 
     track: 'https://api.soundcloud.com/tracks/125170127',
@@ -992,22 +913,25 @@ para ti, Tati. 🥹❤️🎂✨`
       'https://i.pinimg.com/originals/b1/f4/2b/b1f42bacc3ed6e39ff9eebc32a6cb5be.png'
     ],
 
-    tag:   'Para tati',
-    title: 'Para ti, mi amor',
+    tag:   'Para Tati',
+    title: 'Para Tati',
 
     body: [
-      'Mi amor:',
-      'te quiero dar.',
-      'Aqui iria la carta de tati.'
+      `Hola tati,
+      como te podrás dar cuenta hoy es tu cumpleaños y te preguntaras pq la carta dice 1 día, resulta que hoy tienes todooo el día para disfrutar tu cumpleaños,(por eso dice uno, pq es todo el día desde las 12am jaja)
+      , un día para que no pienses en nada malo, solo piensa en todas las personas que te queremos y nos alegramos por que cumplas 18, eres una persona demasiado especial, demasiado divina, y quiero que pases un excelente cumpleaños y ya celebraremos juntas,
+      claro esta que tenemos que ir a tomar buenas decisiones , espero que esta nueva estapa de tu vida te traiga mucho amor para mi jaja, también, pero principalmente muchas cosas buenas, mucha plata jaja, mucha salud y todo lo bueno que pueda pasar,
+      tati se que cuando leas esta carta no es tan temprano, así que espero que me cuentes como pasaste tu día, donde nadie más importa solamente tu, espero que disfrutarás tu día, bueno terminalo de disfrutar pq no se ha acabado, disfruta hasta el último momento del día, 
+      sabes que cuentas conmigo siempre, en cada momento, cada ocasión, pase lo que pase estaré ahí para ti, y ya no se que decirte, pero te quiero demasiado tati.Feliz cumpleaños preciosa marida mía.Felices 18, y todos los años que vengan.Te amo Mucho.No falta ningún día es hoy. 1....`
     ],
 
-    sign:  'Siempre tuyo,<br>tu hombreeeeee'
+    sign:  'Janis'
   }
 
 ];
 
 /* ============================================================
-   Render de la carta personalizada (no tocar)
+   Render de la carta (no tocar)
    ============================================================ */
 const letterWrap          = document.getElementById('letterWrap');
 const letterTagEl         = document.getElementById('letterTag');
@@ -1066,25 +990,25 @@ function openLetter(i){
   sign.style.animationDelay = ((L.body || []).length * 0.3).toFixed(2) + 's';
   letterBody.appendChild(sign);
 
-  /* Texto del botón según corresponda */
-  letterNext.textContent = (i >= QUIZ.length - 1)
-    ? 'Abrir la carta final'
-    : 'Siguiente pregunta';
+  /* Botón: en la última carta dice "Fin ♥", en las demás "Siguiente pregunta" */
+  const isLast = (i >= QUIZ.length - 1);
+  letterNext.textContent = isLast ? 'Fin ♥' : 'Siguiente pregunta';
 
   showScreen('screenLetter');
   playTrack(L.track);
 }
 
 letterNext.addEventListener('click', function(){
+  /* Si es la última carta, solo sube al inicio (cierre) */
+  if (qIndex >= QUIZ.length - 1){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  /* Si no, avanza a la siguiente pregunta */
   stopTrack();
   qIndex++;
-  if (qIndex >= QUIZ.length){
-    showScreen('screen3');
-    startLetter();
-  } else {
-    showScreen('screen2');
-    renderQuiz();
-  }
+  showScreen('screen2');
+  renderQuiz();
 });
 
 /* ============================================================
@@ -1125,23 +1049,6 @@ function playTrack(url){
       });
     }
   } catch(e){}
-}
-
-/* ============================================================
-   PANTALLA 3 — CARTA FINAL + MÚSICA
-   ============================================================ */
-const FINAL_TRACK = 'https://api.soundcloud.com/tracks/125170127';
-
-function startLetter(){
-  playTrack(FINAL_TRACK);
-
-  const paras = document.querySelectorAll('#letterText p');
-  paras.forEach(function(p, i){
-    p.style.animation = 'none';
-    void p.offsetWidth;
-    p.style.animation = '';
-    p.style.animationDelay = (i * 0.3) + 's';
-  });
 }
 </script>
 </body>
