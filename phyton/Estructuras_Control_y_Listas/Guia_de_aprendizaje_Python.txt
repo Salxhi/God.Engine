@@ -1,0 +1,401 @@
+GUIA DE APRENDIZAJE
+ESTRUCTURAS DE CONTROL Y LISTAS EN PYTHON
+
+Esta guia explica los conceptos que practican los 80 programas de esta carpeta.
+Los ejemplos son fragmentos de los propios archivos de la actividad. Puedes abrir
+cada archivo para ver el programa completo y ejecutarlo.
+
+======================================================================
+1. COMO EJECUTAR Y LEER UN PROGRAMA
+======================================================================
+
+Abre una terminal en esta carpeta y ejecuta el archivo que quieras estudiar:
+
+    python 01_if_numero_mayor_100.py
+
+El programa puede pedirte datos. Escribe la respuesta y presiona Enter.
+En un archivo Python, las instrucciones se ejecutan de arriba hacia abajo.
+Los espacios al inicio de una linea tambien importan: indican que instrucciones
+pertenecen a un if, else o ciclo.
+
+======================================================================
+2. DATOS, VARIABLES Y ENTRADAS
+======================================================================
+
+Una variable guarda un dato con un nombre para poder usarlo despues. Por ejemplo,
+el archivo 01_if_numero_mayor_100.py recibe un dato y lo guarda en la variable
+numero:
+
+    numero = int(input("Ingrese un numero entero: "))
+
+input() muestra un mensaje y recibe lo que escribe la persona. El valor recibido
+por input() es texto, por eso se convierte:
+
+    int(...)     convierte el texto a numero entero, como 25
+    float(...)   convierte el texto a numero decimal, como 25.5
+    str(...)     representa un valor como texto
+
+En el archivo 08_if_presupuesto_familiar.py se usa float porque ingresos y gastos
+pueden incluir centavos:
+
+    ingreso = float(input("Ingrese el ingreso mensual: "))
+    gastos = float(input("Ingrese los gastos mensuales: "))
+
+print() muestra resultados. Las f-strings permiten insertar variables dentro de
+un mensaje. En 02_if_multiplo_de_5.py:
+
+    print(f"{numero} es multiplo de 5.")
+
+La letra f antes de las comillas permite escribir una variable entre llaves.
+
+======================================================================
+3. COMPARACIONES Y OPERADORES
+======================================================================
+
+Una comparacion produce un valor verdadero (True) o falso (False). Se utiliza
+para que el programa tome decisiones o cuente elementos.
+
+    ==    igual a
+    !=    distinto de
+    >     mayor que
+    <     menor que
+    >=    mayor o igual que
+    <=    menor o igual que
+
+No confundas = con ==:
+
+    edad = 18       asigna 18 a la variable edad
+    edad == 18      pregunta si edad vale 18
+
+Operadores aritmeticos que aparecen en los ejercicios:
+
+    +     suma
+    -     resta
+    *     multiplicacion
+    /     division
+    %     residuo de la division
+    **    potencia
+
+Tambien puedes combinar condiciones logicas:
+
+    and   ambas condiciones deben ser verdaderas
+    or    basta con que una condicion sea verdadera
+    not   invierte el valor verdadero/falso
+
+En 25_else_permiso_conducir_nocturno.py se comprueba que la hora este dentro
+del rango permitido. En 12_elif_puntaje_medalla.py, strip() quita espacios de
+los extremos y lower() convierte el texto a minusculas antes de compararlo.
+
+El archivo 02_if_multiplo_de_5.py usa el residuo:
+
+    if numero % 5 == 0:
+
+Si dividir numero entre 5 deja residuo cero, el numero es multiplo de 5.
+Por ejemplo, 20 % 5 da 0, mientras 22 % 5 da 2.
+
+======================================================================
+4. TOMAR DECISIONES: IF, ELIF Y ELSE
+======================================================================
+
+IF: una condicion
+-----------------
+
+if ejecuta su bloque cuando la condicion es verdadera. else permite definir
+lo que sucede cuando la condicion es falsa.
+
+En 01_if_numero_mayor_100.py:
+
+    if numero > 100:
+        print("El numero es mayor que 100.")
+    else:
+        print("El numero no es mayor que 100.")
+
+Prueba 101 y 100. El primer valor satisface numero > 100; el segundo no,
+porque la condicion es estricta.
+
+ELIF: varias alternativas
+-------------------------
+
+elif significa "si no, si". Sirve para elegir entre varias categorias. Python
+revisa las condiciones en orden y ejecuta solamente el primer bloque verdadero.
+
+En 11_elif_rango_edad.py:
+
+    if edad < 0:
+        print("La edad no puede ser negativa.")
+    elif edad < 13:
+        print("Clasificacion: Nino.")
+    elif edad < 18:
+        print("Clasificacion: Adolescente.")
+    elif edad < 60:
+        print("Clasificacion: Adulto.")
+    else:
+        print("Clasificacion: Adulto Mayor.")
+
+El orden importa. Primero se separa una edad invalida; despues se comprueban
+rangos cada vez mayores. Por ejemplo, 15 no es menor que 13, pero si es menor
+que 18, asi que queda clasificado como adolescente.
+
+El archivo 12_elif_puntaje_medalla.py tambien muestra como comparar texto:
+usa strip() para quitar espacios de los extremos y lower() para aceptar
+la medalla aunque se escriba en mayusculas o minusculas.
+
+ELSE: el caso alternativo
+-------------------------
+
+else cubre el camino contrario a la condicion. En 21_else_credito_bancario.py:
+
+    if sueldo > 1_500_000:
+        print("Credito aprobado.")
+    else:
+        print("Credito rechazado.")
+
+El guion bajo en 1_500_000 solo ayuda a leer el numero; Python lo interpreta
+igual que 1500000.
+
+Validar antes de calcular
+-------------------------
+
+En 13_elif_menu_operaciones.py la division comprueba primero si el divisor es
+cero. Esto evita realizar una operacion no permitida:
+
+    if numero2 == 0:
+        print("No se puede dividir entre cero.")
+    else:
+        print(f"Resultado: {numero1 / numero2}")
+
+La practica de categorias de archivo, 19_elif_tamano_archivo.py, ilustra otra
+validacion: valores negativos no representan un tamano valido, por eso se
+atienden antes de convertir bytes a KB, MB o GB.
+
+======================================================================
+5. REPETIR CON WHILE
+======================================================================
+
+while repite instrucciones mientras su condicion sea verdadera. Normalmente se
+necesita cambiar una variable en el ciclo para que en algun momento termine.
+
+En 31_while_numeros_1_a_20.py:
+
+    numero = 1
+    while numero <= 20:
+        print(numero)
+        numero += 1
+
+numero += 1 equivale a numero = numero + 1. Cada vuelta avanza al siguiente
+entero y, al llegar a 21, la condicion deja de ser verdadera.
+
+Acumular valores
+----------------
+
+Un acumulador guarda un total que se va actualizando. En 32_while_suma_hasta_cero.py:
+
+    suma = 0
+    while True:
+        numero = int(input("Ingrese un numero (0 para terminar): "))
+        if numero == 0:
+            break
+        suma += numero
+
+La suma empieza en cero. Cada numero distinto de cero se agrega. El cero es
+el valor centinela: indica que ya no se ingresaran mas datos y no se agrega a
+la suma.
+
+while True crea un ciclo que por si solo no termina; break proporciona la salida.
+Sin una salida adecuada, un ciclo puede ejecutarse para siempre.
+
+======================================================================
+6. RECORRER CON FOR Y RANGE
+======================================================================
+
+for repite un bloque para cada elemento de una secuencia. Es util cuando se sabe
+que se quiere recorrer una lista o repetir un numero determinado de veces.
+
+En 42_for_sumar_salarios.py, range(5) produce cinco posiciones y append() agrega
+cada salario a la lista:
+
+    salarios = []
+    for indice in range(5):
+        salario = float(input(f"Ingrese el salario {indice + 1}: "))
+        salarios.append(salario)
+
+Despues un segundo for recorre la lista y calcula el total:
+
+    total = 0
+    for salario in salarios:
+        total += salario
+
+range(inicio, limite, paso)
+---------------------------
+
+range() genera numeros enteros. El limite final no se incluye:
+
+    range(5)          produce 0, 1, 2, 3, 4
+    range(1, 5)        produce 1, 2, 3, 4
+    range(1, 10, 2)    produce 1, 3, 5, 7, 9
+    range(10, 0, -1)   produce 10, 9, 8, ..., 1
+
+Por eso 52_range_impares_1_a_19.py usa:
+
+    for numero in range(1, 20, 2):
+        print(numero)
+
+El paso 2 salta de un impar al siguiente y el limite 20 queda excluido.
+
+======================================================================
+7. CONTROLAR EL CICLO: BREAK, CONTINUE Y PASS
+======================================================================
+
+break
+-----
+
+Termina inmediatamente el ciclo actual. 64_control_login_break.py permite
+hasta tres intentos y sale del for cuando se ingresa la contrasena correcta:
+
+    for intento in range(1, 4):
+        contrasena = input("Ingrese la contrasena: ")
+        if contrasena == contrasena_correcta:
+            print("Acceso concedido.")
+            break
+
+continue
+---------
+
+Omite el resto de la vuelta actual y pasa a la siguiente. En 66_control_limite_saldo.py
+una transaccion invalida o superior al saldo se rechaza con continue; el programa
+no resta ese monto y vuelve a solicitar una transaccion.
+
+En 37_while_intentos_cajero.py, el bloque else alineado con while se ejecuta
+cuando el ciclo termina sin ejecutar break. Asi se puede informar que se
+agotaron los intentos. Si el PIN es correcto, break termina el ciclo y ese
+else no se ejecuta. Este else pertenece al ciclo, no al if.
+
+pass
+----
+
+Es una instruccion que no hace nada. Sirve como espacio provisional cuando Python
+requiere un bloque de codigo, pero todavia no se desea escribir su comportamiento.
+No reemplaza a break ni a continue.
+
+El archivo 63_control_clase_con_pass.py lo utiliza para declarar una clase vacia.
+El archivo 69_control_if_con_pass.py lo coloca dentro de un if que, por ahora,
+no necesita realizar ninguna accion.
+
+======================================================================
+8. LISTAS: GUARDAR Y MANIPULAR VARIOS VALORES
+======================================================================
+
+Una lista guarda varios valores en un mismo orden:
+
+    aprendices = ["Ana", "Carlos", "Luisa"]
+
+Las posiciones se llaman indices y empiezan en cero:
+
+    aprendices[0]     primer elemento: "Ana"
+    aprendices[1]     segundo elemento: "Carlos"
+    aprendices[-1]    ultimo elemento: "Luisa"
+
+Los indices positivos empiezan desde el principio; los negativos cuentan desde
+el final. El archivo 74_listas_notas_aprendices.py imprime notas[0] y notas[-1]
+para obtener la primera y la ultima nota.
+
+Cambiar y agregar elementos
+---------------------------
+
+Las listas son mutables: se pueden cambiar despues de crearlas. En
+75_listas_modificar_inventario.py:
+
+    inventario = ["Monitor", "Mouse", "Teclado", "Audifonos", "Webcam"]
+    inventario[2] = "Teclado Mecanico"
+
+El indice 2 es el tercer elemento. La asignacion reemplaza ese elemento.
+
+append() agrega un elemento al final:
+
+    aprendices.append("Mateo")
+
+Este patron aparece en 76_listas_nuevos_aprendices.py. insert(posicion, valor)
+agrega un elemento en una posicion concreta, como en
+77_listas_insercion_posicional.py:
+
+    asignaturas.insert(1, "Matematicas")
+
+El indice 1 lo coloca en la segunda posicion. remove(valor) elimina la primera
+coincidencia con ese valor; 78_listas_eliminar_elemento.py comprueba antes que
+el producto este en la lista.
+
+Ordenar y contar
+----------------
+
+sorted(lista) crea y devuelve una lista ordenada sin cambiar la lista original:
+
+    puntajes_ascendentes = sorted(puntajes)
+    puntajes_descendentes = sorted(puntajes, reverse=True)
+
+Este ejemplo pertenece a 79_listas_ordenar_puntajes.py. El parametro
+reverse=True cambia el orden a descendente.
+
+count(valor) devuelve cuantas veces aparece un valor. El archivo
+80_listas_contar_asistencias.py utiliza:
+
+    total_presentes = asistencias.count("Presente")
+
+Los metodos y funciones de lista ahorran trabajo: no es necesario contar o
+ordenar manualmente cuando Python ya ofrece una herramienta para ello.
+
+El operador in pregunta si un valor pertenece a una lista y len(lista) devuelve
+la cantidad de elementos. En 72_integrador_estadisticas_inventario.py,
+precios.index(producto_mas_costoso) busca la posicion del precio mayor. Como
+los indices empiezan en cero, se suma 1 para mostrar el numero de producto
+empezando desde 1.
+
+======================================================================
+9. INTEGRAR VARIOS CONCEPTOS
+======================================================================
+
+En una solucion mas grande suelen combinarse listas, ciclos, condiciones y
+acumuladores.
+
+72_integrador_estadisticas_inventario.py recoge cinco precios en una lista,
+recorre los precios, acumula el costo, cuenta cuales superan $50,000 y guarda
+el mas alto. La estructura central es:
+
+    for precio in precios:
+        total += precio
+        if precio > 50_000:
+            productos_sobre_umbral += 1
+        if precio > producto_mas_costoso:
+            producto_mas_costoso = precio
+
+Cada parte tiene una responsabilidad:
+
+    total += precio
+        agrega el precio actual al acumulador
+
+    if precio > 50_000
+        comprueba si debe aumentar el contador
+
+    if precio > producto_mas_costoso
+        actualiza el mayor cuando encuentra uno superior
+
+71_integrador_sistema_autenticacion.py aplica un ciclo con limite, una
+comparacion de contrasena y break para detener los intentos al obtener acceso.
+Estos ejercicios practican dividir un problema en pasos y reutilizar las
+estructuras anteriores en conjunto.
+
+======================================================================
+10. UNA FORMA DE ESTUDIAR CADA ARCHIVO
+======================================================================
+
+1. Lee el enunciado y predice que deberia imprimir el programa.
+2. Identifica que datos recibe y en que variables los guarda.
+3. Encuentra la condicion, ciclo o lista principal del ejercicio.
+4. Ejecutalo con el ejemplo y compara la salida con tu prediccion.
+5. Cambia un dato para probar un caso distinto: por ejemplo 100 y 101,
+   una medalla no reconocida, una lista vacia o un precio justo en $50,000.
+6. Explica con tus palabras por que se ejecuto esa rama o cuantas vueltas dio
+   el ciclo.
+
+Comprender el motivo de cada resultado es mas importante que memorizar el codigo.
+Cuando puedas anticipar la salida y explicar cada linea, habras entendido la
+estructura que practica ese archivo.

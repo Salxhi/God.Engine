@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Definitiva: Estructuras de Datos - Listas en Python - SENA</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131d31;
+            --card-hover: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-python: #38bdf8;
+            --accent-yellow: #facc15;
+            --accent-green: #34d399;
+            --accent-purple: #c084fc;
+            --accent-orange: #fb923c;
+            --border-color: #334155;
+            --code-bg: #070a12;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-hover: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-python: #0284c7;
+            --accent-yellow: #ca8a04;
+            --accent-green: #059669;
+            --accent-purple: #9333ea;
+            --accent-orange: #ea580c;
+            --border-color: #cbd5e1;
+            --code-bg: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 0 auto 30px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            color: var(--accent-python);
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .theme-toggle {
+            background: var(--card-hover);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 950px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        sidebar h3 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 15px;
+        }
+
+        sidebar ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        sidebar a {
+            color: var(--text-main);
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        sidebar a:hover, sidebar a.active {
+            background: var(--card-hover);
+            color: var(--accent-python);
+            border-left: 4px solid var(--accent-python);
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--accent-python);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin: 25px 0 15px 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .theory-box {
+            background: var(--card-hover);
+            border-left: 4px solid var(--accent-purple);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+        }
+
+        .theory-box h4 {
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .theory-box code {
+            color: var(--accent-python);
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        details {
+            background: var(--card-hover);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            padding: 14px 18px;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-main);
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-python);
+        }
+
+        details[open] summary::after {
+            content: "-";
+        }
+
+        details[open] summary {
+            margin-bottom: 12px;
+            color: var(--accent-python);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] pre {
+            color: #0284c7;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .badge-solved { background: rgba(52, 211, 153, 0.2); color: var(--accent-green); }
+        .badge-proposed { background: rgba(251, 146, 60, 0.2); color: var(--accent-orange); }
+        .badge-integrador { background: rgba(192, 132, 252, 0.2); color: var(--accent-purple); }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <header>
+        <div class="header-title">
+            <h1>🐍 Guía de Estructuras de Datos Básicas: Listas en Python</h1>
+            <p>Ing. William Ramón Florez — Instructor SENA | Visual Studio Code & Python</p>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">☀️</span> <span id="theme-text">Modo Claro</span>
+        </button>
+    </header>
+
+    <main>
+        <sidebar>
+            <h3>Temario Principal</h3>
+            <ul>
+                <li><a href="#creacion" class="active">1. Creación de Listas</a></li>
+                <li><a href="#acceso">2. Acceso (Indexación y Slicing)</a></li>
+                <li><a href="#modificacion">3. Modificación de Listas</a></li>
+                <li><a href="#metodos">4. Métodos Principales</a></li>
+                <li><a href="#propuestos">5. Ejercicios Propuestos</a></li>
+                <li><a href="#integradores">6. Ejercicios Integradores</a></li>
+            </ul>
+        </sidebar>
+
+        <div class="content-container">
+            
+            <!-- SECCIÓN 1: CREACIÓN -->
+            <section id="creacion">
+                <h2>1. Creación de Listas en Python</h2>
+                <p>Una lista es una estructura de datos ordenada y mutable que permite almacenar múltiples elementos (de cualquier tipo de dato) bajo una sola variable utilizando corchetes <code>[]</code>.</p>
+                <div class="theory-box">
+                    <h4>Concepto & Sintaxis</h4>
+                    <p><code>mi_lista = [elemento1, elemento2, elemento3]</code><br>Se pueden crear listas vacías con <code>[]</code> o utilizando el constructor <code>list()</code>.</p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - Creación de Listas</h3>
+                <details><summary>1. Crear lista de números enteros <span class="badge badge-solved">Resuelto</span></summary><pre>numeros = [10, 20, 30, 40, 50]
+print(numeros)</pre></details>
+                <details><summary>2. Crear lista de cadenas de texto <span class="badge badge-solved">Resuelto</span></summary><pre>frutas = ["Manzana", "Pera", "Banano", "Uva"]
+print(frutas)</pre></details>
+                <details><summary>3. Crear lista mixta (diferentes tipos de datos) <span class="badge badge-solved">Resuelto</span></summary><pre>datos = ["Juan", 25, 1.75, True]
+print(datos)</pre></details>
+                <details><summary>4. Crear una lista vacía y verificar tipo <span class="badge badge-solved">Resuelto</span></summary><pre>lista_vacia = []
+print(type(lista_vacia))</pre></details>
+                <details><summary>5. Crear lista usando el constructor list() <span class="badge badge-solved">Resuelto</span></summary><pre>vocales = list("aeiou")
+print(vocales)</pre></details>
+                <details><summary>6. Crear lista de listas (matriz bidimensional) <span class="badge badge-solved">Resuelto</span></summary><pre>matriz = [[1, 2], [3, 4], [5, 6]]
+print(matriz)</pre></details>
+                <details><summary>7. Crear lista de booleanos para estados <span class="badge badge-solved">Resuelto</span></summary><pre>estados = [True, False, True, False]
+print(estados)</pre></details>
+                <details><summary>8. Crear lista de precios de productos SENA <span class="badge badge-solved">Resuelto</span></summary><pre>precios = [1500.50, 2300.00, 4500.75]
+print(precios)</pre></details>
+                <details><summary>9. Crear lista con repetición de elementos <span class="badge badge-solved">Resuelto</span></summary><pre>ceros = [0] * 5
+print(ceros)</pre></details>
+                <details><summary>10. Crear lista combinando dos listas existentes <span class="badge badge-solved">Resuelto</span></summary><pre>l1 = [1, 2]
+l2 = [3, 4]
+combinada = l1 + l2
+print(combinada)</pre></details>
+            </section>
+
+            <!-- SECCIÓN 2: ACCESO -->
+            <section id="acceso">
+                <h2>2. Acceso a Elementos (Indexación y Slicing)</h2>
+                <p>Los elementos de una lista se indexan comenzando desde el índice <code>0</code> para el primer elemento. También se pueden usar índices negativos (empezando por <code>-1</code> desde el final) y técnicas de <em>slicing</em> (sub-listas).</p>
+                <div class="theory-box">
+                    <h4>Sintaxis</h4>
+                    <p><code>elemento = lista[indice]</code><br><code>sub_lista = lista[inicio:fin:paso]</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - Acceso</h3>
+                <details><summary>1. Acceder al primer elemento de una lista <span class="badge badge-solved">Resuelto</span></summary><pre>colores = ["Rojo", "Verde", "Azul"]
+print(colores[0])</pre></details>
+                <details><summary>2. Acceder al último elemento usando índice negativo <span class="badge badge-solved">Resuelto</span></summary><pre>colores = ["Rojo", "Verde", "Azul"]
+print(colores[-1])</pre></details>
+                <details><summary>3. Obtener sub-lista mediante slicing básico <span class="badge badge-solved">Resuelto</span></summary><pre>numeros = [10, 20, 30, 40, 50]
+print(numeros[1:4])</pre></details>
+                <details><summary>4. Acceder desde el inicio hasta un índice <span class="badge badge-solved">Resuelto</span></summary><pre>numeros = [10, 20, 30, 40, 50]
+print(numeros[:3])</pre></details>
+                <details><summary>5. Acceder desde un índice hasta el final <span class="badge badge-solved">Resuelto</span></summary><pre>numeros = [10, 20, 30, 40, 50]
+print(numeros[2:])</pre></details>
+                <details><summary>6. Slicing con saltos (pasos) <span class="badge badge-solved">Resuelto</span></summary><pre>pares = [2, 4, 6, 8, 10, 12]
+print(pares[::2])</pre></details>
+                <details><summary>7. Invertir una lista completa usando slicing <span class="badge badge-solved">Resuelto</span></summary><pre>letras = ['a', 'b', 'c', 'd']
+print(letras[::-1])</pre></details>
+                <details><summary>8. Acceder a elemento de una matriz bidimensional <span class="badge badge-solved">Resuelto</span></summary><pre>matriz = [[1, 2, 3], [4, 5, 6]]
+print(matriz[0][2])</pre></details>
+                <details><summary>9. Obtener longitud de lista con len() <span class="badge badge-solved">Resuelto</span></summary><pre>elementos = [5, 10, 15, 20]
+print(len(elementos))</pre></details>
+                <details><summary>10. Verificar existencia de elemento con in <span class="badge badge-solved">Resuelto</span></summary><pre>tecnologias = ["Python", "Java", "PHP"]
+print("Python" in tecnologias)</pre></details>
+            </section>
+
+            <!-- SECCIÓN 3: MODIFICACIÓN -->
+            <section id="modificacion">
+                <h2>3. Modificación de Listas</h2>
+                <p>Las listas son mutables, lo que significa que sus valores pueden ser alterados, reemplazados, ampliados o reducidos directamente después de su creación.</p>
+                <div class="theory-box">
+                    <h4>Sintaxis de Reemplazo</h4>
+                    <p><code>lista[indice] = nuevo_valor</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - Modificación</h3>
+                <details><summary>1. Modificar un elemento específico por índice <span class="badge badge-solved">Resuelto</span></summary><pre>nombres = ["Ana", "Carlos", "Luis"]
+nombres[1] = "Felipe"
+print(nombres)</pre></details>
+                <details><summary>2. Modificar un rango de elementos con slicing <span class="badge badge-solved">Resuelto</span></summary><pre>numeros = [1, 2, 99, 99, 5]
+numeros[2:4] = [3, 4]
+print(numeros)</pre></details>
+                <details><summary>3. Agregar elemento al final con append() <span class="badge badge-solved">Resuelto</span></summary><pre>compras = ["Pan", "Leche"]
+compras.append("Huevos")
+print(compras)</pre></details>
+                <details><summary>4. Insertar elemento en posición específica con insert() <span class="badge badge-solved">Resuelto</span></summary><pre>letras = ["A", "C", "D"]
+letras.insert(1, "B")
+print(letras)</pre></details>
+                <details><summary>5. Extender lista con otra lista usando extend() <span class="badge badge-solved">Resuelto</span></summary><pre>l1 = [1, 2]
+l1.extend([3, 4])
+print(l1)</pre></details>
+                <details><summary>6. Eliminar elemento por valor con remove() <span class="badge badge-solved">Resuelto</span></summary><pre>colores = ["Rojo", "Verde", "Azul"]
+colores.remove("Verde")
+print(colores)</pre></details>
+                <details><summary>7. Eliminar elemento por índice con pop() <span class="badge badge-solved">Resuelto</span></summary><pre>cursos = ["Java", "Python", "PHP"]
+eliminado = cursos.pop(0)
+print(cursos, "Eliminado:", eliminado)</pre></details>
+                <details><summary>8. Vaciar una lista por completo con clear() <span class="badge badge-solved">Resuelto</span></summary><pre>datos = [1, 2, 3, 4]
+datos.clear()
+print(datos)</pre></details>
+                <details><summary>9. Eliminar un rango usando del <span class="badge badge-solved">Resuelto</span></summary><pre>nums = [10, 20, 30, 40, 50]
+del nums[1:3]
+print(nums)</pre></details>
+                <details><summary>10. Modificar lista sumando valores dinámicos <span class="badge badge-solved">Resuelto</span></summary><pre>valores = [10, 20, 30]
+valores[0] += 5
+print(valores)</pre></details>
+            </section>
+
+            <!-- SECCIÓN 4: MÉTODOS PRINCIPALES -->
+            <section id="metodos">
+                <h2>4. Métodos Principales de Listas</h2>
+                <p>Python provee funciones integradas orientadas a objetos para manipular el orden, conteo y búsqueda dentro de las listas de forma eficiente.</p>
+                <div class="theory-box">
+                    <h4>Principales Métodos</h4>
+                    <p><code>sort()</code>, <code>reverse()</code>, <code>count()</code>, <code>index()</code>, <code>copy()</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - Métodos Principales</h3>
+                <details><summary>1. Ordenar lista ascendente con sort() <span class="badge badge-solved">Resuelto</span></summary><pre>nums = [40, 10, 30, 20]
+nums.sort()
+print(nums)</pre></details>
+                <details><summary>2. Ordenar lista descendente con sort(reverse=True) <span class="badge badge-solved">Resuelto</span></summary><pre>nums = [40, 10, 30, 20]
+nums.sort(reverse=True)
+print(nums)</pre></details>
+                <details><summary>3. Invertir orden de elementos con reverse() <span class="badge badge-solved">Resuelto</span></summary><pre>letras = ['x', 'y', 'z']
+letras.reverse()
+print(letras)</pre></details>
+                <details><summary>4. Contar ocurrencias con count() <span class="badge badge-solved">Resuelto</span></summary><pre>votos = ["SI", "NO", "SI", "SI", "NO"]
+print(votos.count("SI"))</pre></details>
+                <details><summary>5. Encontrar índice de un elemento con index() <span class="badge badge-solved">Resuelto</span></summary><pre>ciudades = ["Bogotá", "Medellín", "Cali"]
+print(ciudades.index("Medellín"))</pre></details>
+                <details><summary>6. Copiar una lista con copy() <span class="badge badge-solved">Resuelto</span></summary><pre>original = [1, 2, 3]
+copia = original.copy()
+print(copia)</pre></details>
+                <details><summary>7. Obtener valor máximo de lista con max() <span class="badge badge-solved">Resuelto</span></summary><pre>edades = [18, 25, 42, 19]
+print(max(edades))</pre></details>
+                <details><summary>8. Obtener valor mínimo de lista con min() <span class="badge badge-solved">Resuelto</span></summary><pre>edades = [18, 25, 42, 19]
+print(min(edades))</pre></details>
+                <details><summary>9. Calcular suma total con sum() <span class="badge badge-solved">Resuelto</span></summary><pre>gastos = [100, 250, 150]
+print(sum(gastos))</pre></details>
+                <details><summary>10. Ordenar alfabéticamente texto con sorted() <span class="badge badge-solved">Resuelto</span></summary><pre>nombres = ["Carlos", "Ana", "Beatriz"]
+print(sorted(nombres))</pre></details>
+            </section>
+
+            <!-- SECCIÓN 5: PROPUESTOS -->
+            <section id="propuestos">
+                <h2>5. Ejercicios Propuestos (Para Aprendices en VS Code)</h2>
+                <p>Resuelva los siguientes ejercicios en su entorno de Visual Studio Code aplicando los conceptos y métodos vistos.</p>
+                
+                <details><summary>Propuesto 1: Lista de compras semanal <span class="badge badge-proposed">Propuesto</span></summary><p>Cree una lista con 5 artículos de supermercado y muéstrela en consola.</p></details>
+                <details><summary>Propuesto 2: Acceso a notas de aprendices <span class="badge badge-proposed">Propuesto</span></summary><p>Dada una lista de 5 notas, imprima la primera y la última nota usando índices negativos.</p></details>
+                <details><summary>Propuesto 3: Modificar inventario <span class="badge badge-proposed">Propuesto</span></summary><p>Modifique el tercer producto de una lista de inventario por "Teclado Mecánico".</p></details>
+                <details><summary>Propuesto 4: Registro de nuevos aprendices <span class="badge badge-proposed">Propuesto</span></summary><p>Agregue dos nombres nuevos al final de una lista usando append().</p></details>
+                <details><summary>Propuesto 5: Inserción posicional <span class="badge badge-proposed">Propuesto</span></summary><p>Inserte la materia "Matemáticas" en la segunda posición de una lista de asignaturas.</p></details>
+                <details><summary>Propuesto 6: Depuración de lista <span class="badge badge-proposed">Propuesto</span></summary><p>Elimine un elemento específico por su nombre utilizando remove().</p></details>
+                <details><summary>Propuesto 7: Ordenamiento de puntajes <span class="badge badge-proposed">Propuesto</span></summary><p>Ordene una lista de puntajes de menor a mayor y luego de mayor a menor.</p></details>
+                <details><summary>Propuesto 8: Conteo de asistencias <span class="badge badge-proposed">Propuesto</span></summary><p>Cuente cuántas veces aparece la palabra "Presente" en una lista de asistencia.</p></details>
+                <details><summary>Propuesto 9: Estadísticas de temperaturas <span class="badge badge-proposed">Propuesto</span></summary><p>D

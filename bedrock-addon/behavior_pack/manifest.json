@@ -1,0 +1,23 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Addon Base - Behavior Pack",
+    "description": "Paquete de comportamiento inicial para un add-on de Bedrock.",
+    "uuid": "e4a5a388-2e63-4161-911a-e80e60d78095",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "38397e25-268a-4ac0-b812-c4ce20c2e189",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "650c9c97-3802-4f31-b9da-2358bf34d02a",
+      "version": [1, 0, 0]
+    }
+  ]
+}

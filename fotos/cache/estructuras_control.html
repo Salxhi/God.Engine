@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Definitiva: Estructuras de Control en Python - SENA</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131d31;
+            --card-hover: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-python: #38bdf8;
+            --accent-yellow: #facc15;
+            --accent-green: #34d399;
+            --accent-purple: #c084fc;
+            --accent-orange: #fb923c;
+            --border-color: #334155;
+            --code-bg: #070a12;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-hover: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-python: #0284c7;
+            --accent-yellow: #ca8a04;
+            --accent-green: #059669;
+            --accent-purple: #9333ea;
+            --accent-orange: #ea580c;
+            --border-color: #cbd5e1;
+            --code-bg: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 0 auto 30px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            color: var(--accent-python);
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .theme-toggle {
+            background: var(--card-hover);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 950px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        sidebar h3 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 15px;
+        }
+
+        sidebar ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        sidebar a {
+            color: var(--text-main);
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        sidebar a:hover, sidebar a.active {
+            background: var(--card-hover);
+            color: var(--accent-python);
+            border-left: 4px solid var(--accent-python);
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: var(--accent-python);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin: 25px 0 15px 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .theory-box {
+            background: var(--card-hover);
+            border-left: 4px solid var(--accent-purple);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+        }
+
+        .theory-box h4 {
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .theory-box code {
+            color: var(--accent-python);
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        details {
+            background: var(--card-hover);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            padding: 14px 18px;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-main);
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-python);
+        }
+
+        details[open] summary::after {
+            content: "-";
+        }
+
+        details[open] summary {
+            margin-bottom: 12px;
+            color: var(--accent-python);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] pre {
+            color: #0284c7;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .badge-solved { background: rgba(52, 211, 153, 0.2); color: var(--accent-green); }
+        .badge-proposed { background: rgba(251, 146, 60, 0.2); color: var(--accent-orange); }
+        .badge-integrador { background: rgba(192, 132, 252, 0.2); color: var(--accent-purple); }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <header>
+        <div class="header-title">
+            <h1>🐍 Guía Completa de Estructuras de Control en Python</h1>
+            <p>Ing. William Ramón Florez — Instructor SENA | Visual Studio Code & Python</p>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">☀️</span> <span id="theme-text">Modo Claro</span>
+        </button>
+    </header>
+
+    <main>
+        <sidebar>
+            <h3>Temario Principal</h3>
+            <ul>
+                <li><a href="#if" class="active">1. Condicional if</a></li>
+                <li><a href="#elif">2. Condicional elif</a></li>
+                <li><a href="#else">3. Condicional else</a></li>
+                <li><a href="#while">4. Ciclo while</a></li>
+                <li><a href="#for">5. Ciclo for</a></li>
+                <li><a href="#range">6. Función range()</a></li>
+                <li><a href="#control">7. break, continue, pass</a></li>
+                <li><a href="#integradores">8. Ejercicios Integradores</a></li>
+            </ul>
+        </sidebar>
+
+        <div class="content-container">
+            
+            <!-- SECCIÓN 1: IF -->
+            <section id="if">
+                <h2>1. Estructura Condicional Simple (if)</h2>
+                <p>Evalúa una condición booleana utilizando operadores de comparación. Si el resultado es verdadero (<code>True</code>), ejecuta el bloque de código indentado.</p>
+                <div class="theory-box">
+                    <h4>Concepto & Sintaxis</h4>
+                    <p><code>if condicion:<br>&nbsp;&nbsp;&nbsp;&nbsp;# Bloque ejecutado si la condición es True</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - if</h3>
+                <details><summary>1. Verificar si un número es positivo <span class="badge badge-solved">Resuelto</span></summary><pre>num = 8
+if num > 0:
+    print("El número es positivo")</pre></details>
+                <details><summary>2. Validar mayoría de edad <span class="badge badge-solved">Resuelto</span></summary><pre>edad = 20
+if edad >= 18:
+    print("Es mayor de edad")</pre></details>
+                <details><summary>3. Comprobar si un número es par <span class="badge badge-solved">Resuelto</span></summary><pre>numero = 14
+if numero % 2 == 0:
+    print("El número es par")</pre></details>
+                <details><summary>4. Autorización por contraseña <span class="badge badge-solved">Resuelto</span></summary><pre>clave = "SENA2026"
+if clave == "SENA2026":
+    print("Acceso autorizado")</pre></details>
+                <details><summary>5. Descuento por compra mínima <span class="badge badge-solved">Resuelto</span></summary><pre>compra = 120000
+if compra > 100000:
+    print("Aplica para descuento del 10%")</pre></details>
+                <details><summary>6. Temperatura alta en sensor <span class="badge badge-solved">Resuelto</span></summary><pre>temperatura = 38.5
+if temperatura > 37.5:
+    print("Alerta: Temperatura corporal elevada")</pre></details>
+                <details><summary>7. Validar disponibilidad de stock <span class="badge badge-solved">Resuelto</span></summary><pre>stock = 5
+if stock > 0:
+    print("Producto disponible para despacho")</pre></details>
+                <details><summary>8. Aprobación de examen teórico <span class="badge badge-solved">Resuelto</span></summary><pre>puntaje = 85
+if puntaje >= 70:
+    print("Examen aprobado con éxito")</pre></details>
+                <details><summary>9. Velocidad máxima permitida <span class="badge badge-solved">Resuelto</span></summary><pre>velocidad = 95
+if velocidad > 80:
+    print("Multa por exceso de velocidad")</pre></details>
+                <details><summary>10. Verificación de saldo en cuenta <span class="badge badge-solved">Resuelto</span></summary><pre>saldo = 50000
+retiro = 20000
+if saldo >= retiro:
+    print("Retiro exitoso permitible")</pre></details>
+
+                <h3>10 Ejercicios Propuestos - if</h3>
+                <details><summary>Propuesto 1: Número mayor a 100 <span class="badge badge-proposed">Propuesto</span></summary><p>Escriba un programa que lea un número entero y muestre un mensaje si este es mayor estrictamente a 100.</p></details>
+                <details><summary>Propuesto 2: Múltiplo de 5 <span class="badge badge-proposed">Propuesto</span></summary><p>Cree un script en VS Code que reciba un número y valide si es exactamente múltiplo de 5.</p></details>
+                <details><summary>Propuesto 3: Bonificación laboral <span class="badge badge-proposed">Propuesto</span></summary><p>Verifique si los años de servicio de un empleado superan los 5 años para otorgarle un bono.</p></details>
+                <details><summary>Propuesto 4: Capacidad máxima de auditorio <span class="badge badge-proposed">Propuesto</span></summary><p>Si el número de asistentes supera los 50, imprima alerta de aforo completo.</p></details>
+                <details><summary>Propuesto 5: Calificación perfecta <span class="badge badge-proposed">Propuesto</span></summary><p>Valide si la nota obtenida por un aprendiz es exactamente igual a 100.</p></details>
+                <details><summary>Propuesto 6: Descuento tercera edad <span class="badge badge-proposed">Propuesto</span></summary><p>Verifique si la edad ingresada es igual o mayor a 60 años.</p></details>
+                <details><summary>Propuesto 7: Longitud mínima de usuario <span class="badge badge-proposed">Propuesto</span></summary><p>Compruebe si el nombre de usuario tiene más de 6 caracteres.</p></details>
+                <details><summary>Propuesto 8: Presupuesto familiar <span class="badge badge-proposed">Propuesto</span></summary><p>Valide si los gastos mensuales superan el ingreso base del hogar.</p></details>
+                <details><summary>Propuesto 9: Nivel de brillo automático <span class="badge badge-proposed">Propuesto</span></summary><p>Si el sensor de luz ambiental arroja un valor menor a 20, active el modo nocturno.</p></details>
+                <details><summary>Propuesto 10: Peso de equipaje permitido <span class="badge badge-proposed">Propuesto</span></summary><p>Verifique si el peso de la maleta excede los 23 kilogramos reglamentarios.</p></details>
+            </section>
+
+            <!-- SECCIÓN 2: ELIF -->
+            <section id="elif">
+                <h2>2. Estructuras Condicionales Anidadas (elif)</h2>
+                <p>Permite encadenar múltiples condiciones secuenciales. Se evalúa solo si las condiciones anteriores resultaron falsas.</p>
+                <div class="theory-box">
+                    <h4>Concepto & Sintaxis</h4>
+                    <p><code>if cond1:<br>&nbsp;&nbsp;&nbsp;&nbsp;# ...<br>elif cond2:<br>&nbsp;&nbsp;&nbsp;&nbsp;# Se ejecuta si cond2 es True</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - elif</h3>
+                <details><summary>1. Clasificación de notas cualitativas <span class="badge badge-solved">Resuelto</span></summary><pre>nota = 88
+if nota >= 90:
+    print("Excelente")
+elif nota >= 80:
+    print("Sobresaliente")</pre></details>
+                <details><summary>2. Rangos de temperatura ambiental <span class="badge badge-solved">Resuelto</span></summary><pre>temp = 25
+if temp > 30:
+    print("Caluroso")
+elif temp >= 20:
+    print("Agradable")</pre></details>
+                <details><summary>3. Tipos de licencia de conducción <span class="badge badge-solved">Resuelto</span></summary><pre>edad = 22
+if edad >= 21:
+    print("Licencia Profesional")
+elif edad >= 18:
+    print("Licencia Particular")</pre></details>
+                <details><summary>4. Categorización de IMC <span class="badge badge-solved">Resuelto</span></summary><pre>imc = 24.5
+if imc >= 30:
+    print("Obesidad")
+elif imc >= 25:
+    print("Sobrepeso")
+elif imc >= 18.5:
+    print("Peso normal")</pre></details>
+                <details><summary>5. Tarifas de transporte público <span class="badge badge-solved">Resuelto</span></summary><pre>hora = 14
+if hora < 6:
+    print("Tarifa Nocturna")
+elif hora < 20:
+    print("Tarifa Diurna Normal")</pre></details>
+                <details><summary>6. Clasificación de triángulos por lados <span class="badge badge-solved">Resuelto</span></summary><pre>a, b, c = 5, 5, 5
+if a == b and b == c:
+    print("Equilátero")
+elif a == b or b == c or a == c:
+    print("Isósceles")</pre></details>
+                <details><summary>7. Días de la semana por número <span class="badge badge-solved">Resuelto</span></summary><pre>dia = 3
+if dia == 1:
+    print("Lunes")
+elif dia == 2:
+    print("Martes")
+elif dia == 3:
+    print("Miércoles")</pre></details>
+                <details><summary>8. Estaciones del año <span class="badge badge-solved">Resuelto</span></summary><pre>mes = 7
+if mes in [12, 1, 2]:
+    print("Invierno")
+elif mes in [3, 4, 5]:
+    print("Primavera")
+elif mes in [6, 7, 8]:
+    print("Verano")</pre></details>
+                <details><summary>9. Rangos de consumo eléctrico <span class="badge badge-solved">Resuelto</span></summary><pre>kwh = 150
+if kwh > 300:
+    print("Consumo Alto")
+elif kwh > 100:
+    print("Consumo Moderado")</pre></details>
+                <details><summary>10. Rango salarial por categoría <span class="badge badge-solved">Resuelto</span></summary><pre>salario = 2500000
+if salario > 4000000:
+    print("Alto")
+elif salario > 2000000:
+    print("Medio")</pre></details>
+
+                <h3>10 Ejercicios Propuestos - elif</h3>
+                <details><summary>Propuesto 1: Rango de edad vital <span class="badge badge-proposed">Propuesto</span></summary><p>Clasifique en Niño, Adolescente, Adulto o Adulto Mayor según la edad ingresada.</p></details>
+                <details><summary>Propuesto 2: Asignación de puntaje por medalla <span class="badge badge-proposed">Propuesto</span></summary><p>Asigne 100 puntos por Oro, 50 por Plata y 20 por Bronce usando elif.</p></details>
+                <details><summary>Propuesto 3: Menú de operaciones aritméticas <span class="badge badge-proposed">Propuesto</span></summary><p>Seleccione opción 1 para sumar, 2 para restar, 3 para multiplicar y 4 para dividir.</p></details>
+                <details><summary>Propuesto 4: Dificultad de juego <span class="badge badge-proposed">Propuesto</span></summary><p>Establezca nivel Fácil, Medio, Difícil o Extremo según el selector numérico (1-4).</p></details>
+                <details><summary>Propuesto 5: Descuento por categoría de cliente <span class="badge badge-proposed">Propuesto</span></summary><p>Cliente VIP, Regular o Nuevo con sus respectivos porcentajes de rebaja.</p></details>
+                <details><summary>Propuesto 6: Calificación de calidad de aire (AQI) <span class="badge badge-proposed">Propuesto</span></summary><p>Bueno, Moderado, Dañino para grupos sensibles o Peligroso.</p></details>
+                <details><summary>Propuesto 7: Tipo de vehículo por número de ruedas <span class="badge badge-proposed">Propuesto</span></summary><p>Moto (2), Auto (4), Bus (6).</p></details>
+                <details><summary>Propuesto 8: Turno de trabajo laboral <span class="badge badge-proposed">Propuesto</span></summary><p>Mañana, Tarde o Noche según la hora de ingreso.</p></details>
+                <details><summary>Propuesto 9: Tamaño de archivo digital <span class="badge badge-proposed">Propuesto</span></summary><p>KB, MB o GB según el valor numérico de bytes.</p></details>
+                <details><summary>Propuesto 10: Clasificación de huracanes Saffir-Simpson <span class="badge badge-proposed">Propuesto</span></summary><p>Categorías del 1 al 5 según la velocidad del viento.</p></details>
+            </section>
+
+            <!-- SECCIÓN 3: ELSE -->
+            <section id="else">
+                <h2>3. Estructura Condicional Alternativa (else)</h2>
+                <p>Captura todos los casos restantes donde ninguna condición previa de los bloques <code>if</code> o <code>elif</code> se haya cumplido.</p>
+                <div class="theory-box">
+                    <h4>Concepto & Sintaxis</h4>
+                    <p><code>if condicion:<br>&nbsp;&nbsp;&nbsp;&nbsp;# ...<br>else:<br>&nbsp;&nbsp;&nbsp;&nbsp;# Se ejecuta si ninguna otra condición fue True</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - else</h3>
+                <details><summary>1. Par o Impar definitivo <span class="badge badge-solved">Resuelto</span></summary><pre>n = 7
+if n % 2 == 0:
+    print("Par")
+else:
+    print("Impar")</pre></details>
+                <details><summary>2. Validación de contraseña estricta <span class="badge badge-solved">Resuelto</span></summary><pre>pwd = "abc"
+if len(pwd) >= 8:
+    print("Segura")
+else:
+    print("Insegura: muy corta")</pre></details>
+                <details><summary>3. Estado de aprobación general <span class="badge badge-solved">Resuelto</span></summary><pre>cal = 59
+if cal >= 60:
+    print("Aprobado")
+else:
+    print("Reprobado")</pre></details>
+                <details><summary>4. Mayoría de edad simple <span class="badge badge-solved">Resuelto</span></summary><pre>ed = 16
+if ed >= 18:
+    print("Adulto")
+else:
+    print("Menor de edad")</pre></details>
+                <details><summary>5. Disponibilidad de inventario <span class="badge badge-solved">Resuelto</span></summary><pre>cant = 0
+if cant > 0:
+    print("Hay stock")
+else:
+    print("Agotado")</pre></details>
+                <details><summary>6. Signo de un número <span class="badge badge-solved">Resuelto</span></summary><pre>val = -5
+if val >= 0:
+    print("Positivo o cero")
+else:
+    print("Negativo")</pre></details>
+                <details><summary>7. Verificación de bisiesto básico <span class="badge badge-solved">Resuelto</span></summary><pre>anio = 2024
+if anio % 4 == 0:
+    print("Posible año bisiesto")
+else:
+    print("Año común")</pre></details>
+                <details><summary>8. Control de acceso biométrico <span class="badge badge-solved">Resuelto</span></summary><pre>huella = False
+if huella:
+    print("Puerta abierta")
+else:
+    print("Acceso denegado")</pre></details>
+                <details><summary>9. Estado de conexión a red <span class="badge badge-solved">Resuelto</span></summary><pre>conectado = True
+if conectado:
+    print("En línea")
+else:
+    print("Sin conexión")</pre></details>
+                <details><summary>10. Aplicación de recargo por mora <span class="badge badge-solved">Resuelto</span></summary><pre>pago_a_tiempo = False
+if pago_a_tiempo:
+    print("Sin recargo")
+else:
+    print("Aplica multa del 5%")</pre></details>
+
+                <h3>10 Ejercicios Propuestos - else</h3>
+                <details><summary>Propuesto 1: Aprobación de crédito bancario <span class="badge badge-proposed">Propuesto</span></summary><p>Si el sueldo supera 1.5 millones se aprueba, de lo contrario se rechaza.</p></details>
+                <details><summary>Propuesto 2: Control de temperatura de motor <span class="badge badge-proposed">Propuesto</span></summary><p>Normal o Apagado de emergencia por sobrecalentamiento.</p></details>
+                <details><summary>Propuesto 3: Verificación de año par o impar <span class="badge badge-proposed">Propuesto</span></summary><p>Determine si un año ingresado es par o impar.</p></details>
+                <details><summary>Propuesto 4: Estado de beca estudiantil <span class="badge badge-proposed">Propuesto</span></summary><p>Si el promedio es >= 4.5 se otorga beca, de lo contrario paga tarifa estándar.</p></details>
+                <details><summary>Propuesto 5: Permiso de conducir nocturno <span class="badge badge-proposed">Propuesto</span></summary><p>Valide si la hora permite conducir sin restricciones o requiere autorización.</p></details>
+                <details><summary>Propuesto 6: Verificación de stock mínimo <span class="badge badge-proposed">Propuesto</span></summary><p>Aviso de reabastecimiento o stock suficiente.</p></details>
+                <details><summary>Propuesto 7: Acceso a sección VIP <span class="badge badge-proposed">Propuesto</span></summary><p>Membresía activa o entrada general.</p></details>
+                <details><summary>Propuesto 8: Paridad de número de cédula <span class="badge badge-proposed">Propuesto</span></summary><p>Valide pico y cédula par o impar.</p></details>
+                <details><summary>Propuesto 9: Mayor o menor entre dos valores <span class="badge badge-proposed">Propuesto</span></summary><p>Compare dos números e indique cuál es mayor o si son iguales con else.</p></details>
+                <details><summary>Propuesto 10: Validación de formato de correo <span class="badge badge-proposed">Propuesto</span></summary><p>Si contiene '@' es válido, de lo contrario inválido.</p></details>
+            </section>
+
+            <!-- SECCIÓN 4: WHILE -->
+            <section id="while">
+                <h2>4. Estructura Repetitiva (Ciclo while)</h2>
+                <p>Ejecuta un bloque de instrucciones repetidamente mientras una condición lógica sea verdadera (<code>True</code>).</p>
+                <div class="theory-box">
+                    <h4>Concepto & Sintaxis</h4>
+                    <p><code>while condicion:<br>&nbsp;&nbsp;&nbsp;&nbsp;# Código repetitivo<br>&nbsp;&nbsp;&nbsp;&nbsp;# Actualizar variable de control para evitar bucles infinitos</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - while</h3>
+                <details><summary>1. Contador ascendente del 1 al 5 <span class="badge badge-solved">Resuelto</span></summary><pre>c = 1
+while c <= 5:
+    print(c)
+    c += 1</pre></details>
+                <details><summary>2. Cuenta regresiva para despegue <span class="badge badge-solved">Resuelto</span></summary><pre>t = 3
+while t > 0:
+    print(t)
+    t -= 1
+print("¡Despegue!")</pre></details>
+                <details><summary>3. Sumatoria acumulativa hasta 10 <span class="badge badge-solved">Resuelto</span></summary><pre>suma = 0
+i = 1
+while i <= 4:
+    suma += i
+    i += 1
+print("Suma:", suma)</pre></details>
+                <details><summary>4. Validación de contraseña con reintento <span class="badge badge-solved">Resuelto</span></summary><pre>intentos = 0
+while intentos < 3:
+    intentos += 1
+print("Intentos agotados")</pre></details>
+                <details><summary>5. Tabla de multiplicar del 2 <span class="badge badge-solved">Resuelto</span></summary><pre>i = 1
+while i <= 3:
+    print(f"2 x {i} = {2*i}")
+    i += 1</pre></details>
+                <details><summary>6. Potencias de 2 menores a 20 <span class="badge badge-solved">Resuelto</span></summary><pre>p = 1
+while p < 20:
+    print(p)
+    p *= 2</pre></details>
+                <details><summary>7. Lectura simulada hasta encontrar cero <span class="badge badge-solved">Resuelto</span></summary><pre>valores = [5, 2, 8, 0]
+idx = 0
+while valores[idx] != 0:
+    print("Leído:", valores[idx])
+    idx += 1</pre></details>
+                <details><summary>8. Control de saldo bancario en decremento <span class="badge badge-solved">Resuelto</span></summary><pre>saldo = 100
+while saldo > 0:
+    saldo -= 30
+print("Saldo final:", saldo)</pre></details>
+                <details><summary>9. Generar números pares menores a 8 <span class="badge badge-solved">Resuelto</span></summary><pre>n = 2
+while n < 8:
+    print(n)
+    n += 2</pre></details>
+                <details><summary>10. Iteraciones controladas por centinela <span class="badge badge-solved">Resuelto</span></summary><pre>activo = True
+contador = 0
+while activo:
+    contador += 1
+    if contador == 3:
+        activo = False</pre></details>
+
+                <h3>10 Ejercicios Propuestos - while</h3>
+                <details><summary>Propuesto 1: Imprimir números del 1 al 20 <span class="badge badge-proposed">Propuesto</span></summary><p>Use un ciclo while para mostrar los números enteros del 1 al 20.</p></details>
+                <details><summary>Propuesto 2: Sumar números ingresados hasta cero <span class="badge badge-proposed">Propuesto</span></summary><p>Sume números enteros ingresados repetidamente hasta que el usuario digite 0.</p></details>
+                <details><summary>Propuesto 3: Tabla de multiplicar personalizada <span class="badge badge-proposed">Propuesto</span></summary><p>Genere la tabla de multiplicar de un número ingresado del 1 al 10.</p></details>
+                <details><summary>Propuesto 4: Adivinar número secreto <span class="badge badge-proposed">Propuesto</span></summary><p>Ciclo que permita adivinar un número fijo hasta acertar.</p></details>
+                <details><summary>Propuesto 5: Menú interactivo repetitivo <span class="badge badge-proposed">Propuesto</span></summary><p>Muestre un menú de opciones que se repita hasta que se elija salir (opción 5).</p></details>
+                <details><summary>Propuesto 6: Divisiones sucesivas por 2 <span class="badge badge-proposed">Propuesto</span></summary><p>Divida un número entre 2 sucesivamente hasta que sea menor a 1.</p></details>
+                <details><summary>Propuesto 7: Control de intentos de cajero <span class="badge badge-proposed">Propuesto</span></summary><p>Permita máximo 3 intentos de PIN bancario.</p></details>
+                <details><summary>Propuesto 8: Secuencia de Fibonacci con while <span class="badge badge-proposed">Propuesto</span></summary><p>Genere los primeros 10 términos de la serie.</p></details>
+                <details><summary>Propuesto 9: Impresión de caracteres de un texto <span class="badge badge-proposed">Propuesto</span></summary><p>Recorra un string letra por letra usando índice y while.</p></details>
+                <details><summary>Propuesto 10: Llenado de tanque de agua virtual <span class="badge badge-proposed">Propuesto</span></summary><p>Incremente nivel de 10 en 10 hasta llegar a 100.</p></details>
+            </section>
+
+            <!-- SECCIÓN 5: FOR -->
+            <section id="for">
+                <h2>5. Estructura Repetitiva (Ciclo for)</h2>
+                <p>Diseñado para iterar sobre los elementos de cualquier secuencia (como listas, tuplas, cadenas de texto o rangos).</p>
+                <div class="theory-box">
+                    <h4>Concepto & Sintaxis</h4>
+                    <p><code>for elemento in secuencia:<br>&nbsp;&nbsp;&nbsp;&nbsp;# Código ejecutado por cada elemento</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - for</h3>
+                <details><summary>1. Recorrer lista de frutas <span class="badge badge-solved">Resuelto</span></summary><pre>for fruta in ["Manzana", "Pera", "Uva"]:
+    print(fruta)</pre></details>
+                <details><summary>2. Iterar caracteres de un string <span class="badge badge-solved">Resuelto</span></summary><pre>for letra in "SENA":
+    print(letra)</pre></details>
+                <details><summary>3. Sumar elementos de una lista numérica <span class="badge badge-solved">Resuelto</span></summary><pre>total = 0
+for n in [10, 20, 30]:
+    total += n
+print(total)</pre></details>
+                <details><summary>4. Mostrar nombres de aprendices <span class="badge badge-solved">Resuelto</span></summary><pre>for nombre in ["Ana", "Carlos", "Luisa"]:
+    print(f"Aprendiz: {nombre}")</pre></details>
+                <details><summary>5. Filtrar e imprimir números pares de lista <span class="badge badge-solved">Resuelto</span></summary><pre>for num in [1, 2, 3, 4, 5, 6]:
+    if num % 2 == 0:
+        print(num)</pre></details>
+                <details><summary>6. Calcular cuadrados de una lista <span class="badge badge-solved">Resuelto</span></summary><pre>for x in [1, 2, 3, 4]:
+    print(x ** 2)</pre></details>
+                <details><summary>7. Contar vocales en una palabra <span class="badge badge-solved">Resuelto</span></summary><pre>contador = 0
+for l in "programacion":
+    if l in "aeiou":
+        contador += 1
+print(contador)</pre></details>
+                <details><summary>8. Mostrar precios con IVA incluido <span class="badge badge-solved">Resuelto</span></summary><pre>for precio in [1000, 2000, 3000]:
+    print(precio * 1.19)</pre></details>
+                <details><summary>9. Validar códigos de productos <span class="badge badge-solved">Resuelto</span></summary><pre>for codigo in ["A01", "B02", "C03"]:
+    print("Revisando código:", codigo)</pre></details>
+                <details><summary>10. Iterar tupla de coordenadas <span class="badge badge-solved">Resuelto</span></summary><pre>for coord in [(0,0), (1,2), (5,5)]:
+    print("Punto:", coord)</pre></details>
+
+                <h3>10 Ejercicios Propuestos - for</h3>
+                <details><summary>Propuesto 1: Recorrer nombres de tecnologías <span class="badge badge-proposed">Propuesto</span></summary><p>Cree una lista con Python, Java, PHP y recórralos con un ciclo for.</p></details>
+                <details><summary>Propuesto 2: Sumar salarios de una lista <span class="badge badge-proposed">Propuesto</span></summary><p>Calcule la sumatoria total de 5 valores salariales almacenados en una lista.</p></details>
+                <details><summary>Propuesto 3: Encontrar palabra más larga <span class="badge badge-proposed">Propuesto</span></summary><p>Recorra una lista de palabras e imprima la de mayor longitud.</p></details>
+                <details><summary>Propuesto 4: Duplicar elementos de una lista <span class="badge badge-proposed">Propuesto</span></summary><p>Multiplique por 2 cada número de una lista dada.</p></details>
+                <details><summary>Propuesto 5: Contar elementos mayores a 50 <span class="badge badge-proposed">Propuesto</span></summary><p>Dada una lista de notas, cuente cuántas son mayores a 50.</p></details>
+                <details><summary>Propuesto 6: Generar correos institucionales <span class="badge badge-proposed">Propuesto</span></summary><p>Concatene '@sena.edu.co' a una lista de nombres de usuario.</p></details>
+                <details><summary>Propuesto 7: Imprimir reverso de palabra con for <span class="badge badge-proposed">Propuesto</span></summary><p>Recorra caracteres y procese inversión.</p></details>
+                <details><summary>Propuesto 8: Validar stock mínimo en lista de tuplas <span class="badge badge-proposed">Propuesto</span></summary><p>Revise inventario de productos y cantidades.</p></details>
+                <details><summary>Propuesto 9: Separar números positivos y negativos <span class="badge badge-proposed">Propuesto</span></summary><p>Clasifique elementos de una lista numérica.</p></details>
+                <details><summary>Propuesto 10: Concatenar frase completa <span class="badge badge-proposed">Propuesto</span></summary><p>Una una lista de palabras en una sola oración usando for.</p></details>
+            </section>
+
+            <!-- SECCIÓN 6: RANGE -->
+            <section id="range">
+                <h2>6. Uso de la función range()</h2>
+                <p>Genera una secuencia progresiva de números enteros. Muy útil combinado con ciclos <code>for</code> para definir repeticiones exactas.</p>
+                <div class="theory-box">
+                    <h4>Sintaxis</h4>
+                    <p><code>range(inicio, fin, paso)</code></p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - range()</h3>
+                <details><summary>1. Números del 0 al 4 <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(5):
+    print(i)</pre></details>
+                <details><summary>2. Rango con inicio y fin específicos <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(1, 6):
+    print(i)</pre></details>
+                <details><summary>3. Números pares del 2 al 10 <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(2, 11, 2):
+    print(i)</pre></details>
+                <details><summary>4. Cuenta regresiva con paso negativo <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(5, 0, -1):
+    print(i)</pre></details>
+                <details><summary>5. Tabla del 5 usando range <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(1, 4):
+    print(5 * i)</pre></details>
+                <details><summary>6. Suma de primeros 5 enteros <span class="badge badge-solved">Resuelto</span></summary><pre>s = 0
+for i in range(1, 6):
+    s += i
+print(s)</pre></details>
+                <details><summary>7. Múltiplos de 3 menores a 15 <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(3, 15, 3):
+    print(i)</pre></details>
+                <details><summary>8. Imprimir índices de una lista <span class="badge badge-solved">Resuelto</span></summary><pre>elementos = ['a', 'b', 'c']
+for idx in range(len(elementos)):
+    print(idx, elementos[idx])</pre></details>
+                <details><summary>9. Secuencia con salto de 3 en 3 <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(1, 10, 3):
+    print(i)</pre></details>
+                <details><summary>10. Repetir saludo 3 veces <span class="badge badge-solved">Resuelto</span></summary><pre>for _ in range(3):
+    print("Hola SENA")</pre></details>
+
+                <h3>10 Ejercicios Propuestos - range()</h3>
+                <details><summary>Propuesto 1: Números del 10 al 20 <span class="badge badge-proposed">Propuesto</span></summary><p>Use range para imprimir del 10 al 20.</p></details>
+                <details><summary>Propuesto 2: Números impares del 1 al 19 <span class="badge badge-proposed">Propuesto</span></summary><p>Genere impares usando el tercer parámetro de range.</p></details>
+                <details><summary>Propuesto 3: Cuenta regresiva desde 10 <span class="badge badge-proposed">Propuesto</span></summary><p>Imprima del 10 al 1 en orden descendente.</p></details>
+                <details><summary>Propuesto 4: Sumar pares entre 1 y 50 <span class="badge badge-proposed">Propuesto</span></summary><p>Acumule la suma de todos los pares en ese rango.</p></details>
+                <details><summary>Propuesto 5: Tabla del 9 completa <span class="badge badge-proposed">Propuesto</span></summary><p>Multiplicaciones del 1 al 10 para el 9.</p></details>
+                <details><summary>Propuesto 6: Múltiplos de 4 hasta 40 <span class="badge badge-proposed">Propuesto</span></summary><p>Muestre los múltiplos utilizando saltos en range.</p></details>
+                <details><summary>Propuesto 7: Cuadrados de 1 a 10 <span class="badge badge-proposed">Propuesto</span></summary><p>Calcule cuadrados combinando range y for.</p></details>
+                <details><summary>Propuesto 8: Generar listado numérico dinámico <span class="badge badge-proposed">Propuesto</span></summary><p>Rango basado en variables configurables.</p></details>
+                <details><summary>Propuesto 9: Secuencia descendente de 2 en 2 <span class="badge badge-proposed">Propuesto</span></summary><p>Desde 20 hasta 0 con paso -2.</p></details>
+                <details><summary>Propuesto 10: Validar repetición de tareas <span class="badge badge-proposed">Propuesto</span></summary><p>Ejecutar bloque 5 veces exactas.</p></details>
+            </section>
+
+            <!-- SECCIÓN 7: CONTROL DE FLUJO -->
+            <section id="control">
+                <h2>7. Control de Flujo (break, continue, pass)</h2>
+                <p>Instrucciones especiales para alterar la ejecución normal de los bucles en Python.</p>
+                <div class="theory-box">
+                    <h4>Conceptos</h4>
+                    <p><code>break</code>: Finaliza el bucle de inmediato.<br><code>continue</code>: Salta a la siguiente iteración.<br><code>pass</code>: Operación nula (marcador de posición).</p>
+                </div>
+
+                <h3>10 Ejercicios Resueltos - Control de Flujo</h3>
+                <details><summary>1. Uso de break para detener búsqueda <span class="badge badge-solved">Resuelto</span></summary><pre>for n in [1, 2, 3, 4, 5]:
+    if n == 3:
+        break
+    print(n)</pre></details>
+                <details><summary>2. Uso de continue para saltar número <span class="badge badge-solved">Resuelto</span></summary><pre>for n in range(1, 5):
+    if n == 2:
+        continue
+    print(n)</pre></details>
+                <details><summary>3. Uso de pass en estructura pendiente <span class="badge badge-solved">Resuelto</span></summary><pre>for n in range(3):
+    pass  # Código futuro en desarrollo</pre></details>
+                <details><summary>4. Romper ciclo while con break <span class="badge badge-solved">Resuelto</span></summary><pre>c = 0
+while True:
+    c += 1
+    if c == 3:
+        break
+print("Terminado en", c)</pre></details>
+                <details><summary>5. Saltar impares con continue <span class="badge badge-solved">Resuelto</span></summary><pre>for i in range(1, 6):
+    if i % 2 != 0:
+        continue
+    print("Par:", i)</pre></details>
+                <details><summary>6. Búsqueda de elemento en lista con break <span class="badge badge-solved">Resuelto</span></summary><pre>for fruta in ["Manzana", "Pera", "Uva"]:
+    if fruta == "Pera":
+        print("¡Encontrado!")
+        break</pre></details>
+                <details><summary>7. Validar entrada no vacía con break <span class="badge badge-solved">Resuelto</span></summary><pre>entrada = "admin"
+while True:
+    if len(entrada) > 0:
+        break</pre></details>
+                <details><summary>8. Omitir impresión de valor específico <span class="badge badge-solved">Resuelto</span></summary><pre>for letra in "python":
+    if letra == "h":
+        continue
+    print(letra)</pre></details>
+                <details><summary>9. Estructura condicional vacía con pass <span class="badge badge-solved">Resuelto</span></summary><pre>x = 10
+if x > 5:
+    pass</pre></details>
+                <details><summary>10. Detener sumatoria al superar límite <span class="badge badge-solved">Resuelto</span></summary><pre>suma = 0
+for i in [5, 10, 20, 30]:
+    suma += i
+    if suma > 25:
+        break
+print(suma)</pre></details>
+
+                <h3>10 Ejercicios Propuestos - Control de Flujo</h3>
+                <details><summary>Propuesto 1: Detener bucle al hallar número 7 <span class="badge badge-proposed">Propuesto</span></summary><p>Use break al encontrar el 7 en una lista.</p></details>
+                <details><summary>Propuesto 2: Saltar múltiplos de 3 con continue <span class="badge badge-proposed">Propuesto</span></summary><p>Imprima del 1 al 10 omitiendo múltiplos de 3.</p></details>
+                <details><summary>Propuesto 3: Función en desarrollo con pass <span class="badge badge-proposed">Propuesto</span></summary><p>Implemente un esqueleto de clase usando pass.</p></details>
+                <details><summary>Propuesto 4: Salir de login tras acierto <span class="badge badge-proposed">Propuesto</span></summary><p>Detenga ciclo de intentos con break al acertar.</p></details>
+                <details><summary>Propuesto 5: Omitir vocales en frase <span class="badge badge-proposed">Propuesto</span></summary><p>Imprima solo consonantes usando continue.</p></details>
+                <details><summary>Propuesto 6: Romper ciclo por límite de saldo <span class="badge badge-proposed">Propuesto</span></summary><p>Detenga transacciones al quedar en cero.</p></details>
+                <details><summary>Propuesto 7: Validar rango con break <span class="badge badge-proposed">Propuesto</span></summary><p>Finalice captura al recibir número válido.</p></details>
+                <details><summary>Propuesto 8: Filtrar negativos con continue <span class="badge badge-proposed">Propuesto</span></summary><p>Sume solo positivos saltando negativos.</p></details>
+                <details><summary>Propuesto 9: Marcador condicional pass <span class="badge badge-proposed">Propuesto</span></summary><p>Diseñe un if sin cuerpo provisional.</p></details>
+                <details><summary>Propuesto 10: Interrupción de emergencia <span class="badge badge-proposed">Propuesto</span></summary><p>Simule botón de parada de emergencia con break.</p></details>
+            </section>
+
+            <!-- SECCIÓN 8: INTEGRADORES -->
+            <section id="integradores">
+                <h2>8. Ejercicios Prácticos Integradores</h2>
+                <p>Ejercicios complejos donde se unen condicionales, ciclos y control de flujo en un solo script de Python (para ejecutar en Visual Studio Code).</p>
+                
+                <details>
+                    <summary>Ejercicio Integrador 1: Sistema de Autenticación y Control de Intentos <span class="badge badge-integrador">Integrador</span></summary>
+                    <p>Desarrolle un programa en Python que simule el inicio de sesión de un sistema académico en Visual Studio Code. El usuario dispone máximo de 3 intentos para ingresar la contraseña correcta ("SENA2026"). Si acierta, el sistema muestra "Acceso Concedido" y se detiene inmediatamente mediante control de flujo. Si agota los 3 intentos, el sistema se bloquea e imprime una alerta de seguridad.</p>
+                </details>
+
+                <details>
+                    <summary>Ejercicio Integrador 2: Calculadora de Inventario y Estadísticas de Productos <span class="badge badge-integrador">Integrador</span></summary>
+                    <p>Diseñe un script que procese un lote de 5 productos registrados. Para cada producto se ingresa su precio. El programa debe calcular el costo total del inventario, identificar cuántos productos superan el precio umbral de $50,000, determinar cuál fue el producto más costoso y mostrar un reporte estadístico completo utilizando ciclos, condicionales y operadores de comparación.</p>
+                </details>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Modo Oscuro';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Modo Claro';
+            }
+        }
+    </script>
+</body>
+</html>
