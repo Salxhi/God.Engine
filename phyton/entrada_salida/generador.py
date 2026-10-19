@@ -16,4 +16,4 @@ else:
 
     print("\n--- USUARIO GENERADO ---")
     print(f"Nombre completo: {nombre.capitalize()} {apellido.capitalize()}")
-    print(f"Usuario:         {usuario}")
+    print(f"Usuario:         {usuario}@gmail.com")
