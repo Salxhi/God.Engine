@@ -1,3 +1,3 @@
-<p align="center">
-  <img src="fotos/logos/logo_salxhi.png" alt="Logo de Salxhi" width="700">
-</p>
+# God.Engine
+
+![Logo de Salxhi](fotos/logos/logo_salxhi.png)
