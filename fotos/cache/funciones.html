@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de aprendizaje: Funciones en Python - SENA</title>
+    <style>
+        :root {
+            --paper: #ffffff;
+            --ink: #414141;
+            --muted: #555555;
+            --orange: #c66b28;
+            --peach: #fff5eb;
+            --border: #e8d5c2;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { background: var(--paper); }
+        body {
+            margin: 0;
+            padding: 28px;
+            color: var(--ink);
+            font: 10pt/1.48 "Segoe UI", Arial, sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        header, main, footer { max-width: 900px; margin: 0 auto; }
+        header {
+            padding: 16px 8px 20px;
+            margin-bottom: 18px;
+            border-bottom: 2px solid var(--border);
+        }
+        .eyebrow {
+            margin: 0 0 7px;
+            color: var(--orange);
+            font-size: 9pt;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        h1 {
+            margin: 0;
+            color: var(--orange);
+            font-size: 26pt;
+            line-height: 1.16;
+        }
+        .subtitle { margin: 8px 0 0; color: var(--muted); font-size: 12pt; }
+        .byline { margin: 15px 0 0; color: var(--muted); font-size: 9.5pt; }
+        .cover-note {
+            margin-top: 20px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            background: var(--peach);
+            color: var(--muted);
+        }
+        .cover { min-height: 0; }
+        .contents, section {
+            margin: 0 0 18px;
+            padding: 0;
+            border: 0;
+            background: var(--paper);
+        }
+        .contents {
+            margin-top: 18px;
+            padding: 17px 19px;
+            border: 1px solid var(--border);
+            background: var(--peach);
+        }
+        .contents h2, h2 {
+            margin: 0 0 10px;
+            padding: 0;
+            border: 0;
+            color: var(--orange);
+            font-size: 16pt;
+        }
+        h3 { margin: 17px 0 7px; color: var(--orange); font-size: 11pt; }
+        p { margin: 7px 0 10px; color: var(--muted); }
+        ul { margin: 7px 0 11px; padding-left: 21px; color: var(--muted); }
+        li { margin: 3px 0; }
+        code, pre { font-family: Consolas, "Courier New", monospace; }
+        p code, li code { color: #854d24; }
+        .callout {
+            margin: 12px 0;
+            padding: 10px 13px;
+            border: 1px solid var(--border);
+            background: var(--peach);
+        }
+        .callout strong { color: var(--ink); }
+        .example {
+            margin: 12px 0 15px;
+            padding: 0;
+            border: 0;
+            background: var(--paper);
+            break-inside: avoid;
+        }
+        .example h3 { margin: 0 0 4px; }
+        .example p { margin: 4px 0 7px; }
+        .filename { color: #85552f; font: 8.5pt Consolas, "Courier New", monospace; }
+        pre {
+            margin: 7px 0 0;
+            padding: 10px 12px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+            border: 1px solid var(--border);
+            background: var(--peach);
+            color: #414141;
+            font-size: 8pt;
+            line-height: 1.38;
+        }
+        .output {
+            margin-top: 7px;
+            padding: 7px 10px;
+            border: 1px solid var(--border);
+            background: var(--peach);
+            color: var(--muted);
+        }
+        .output strong { color: var(--orange); }
+        .section-break { break-before: page; }
+        footer {
+            padding: 10px 0 0;
+            border-top: 1px solid var(--border);
+            color: #777777;
+            font-size: 8pt;
+        }
+        @page {
+            size: Letter;
+            margin: 18mm 16mm 16mm;
+            @top-center {
+                content: "Funciones en Python · Guía de ejecución y funcionamiento";
+                color: var(--orange);
+                font: 700 8pt "Segoe UI", Arial, sans-serif;
+                text-align: left;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 4px;
+            }
+            @bottom-left {
+                content: "Guía de ejecución y funcionamiento";
+                color: #777777;
+                font: 8pt "Segoe UI", Arial, sans-serif;
+                border-top: 1px solid var(--border);
+                padding-top: 4px;
+            }
+            @bottom-right {
+                content: "Página " counter(page);
+                color: #777777;
+                font: 8pt "Segoe UI", Arial, sans-serif;
+                border-top: 1px solid var(--border);
+                padding-top: 4px;
+            }
+        }
+        @media print {
+            body { padding: 0; }
+            header, main, footer { max-width: none; }
+            section, .contents { margin-bottom: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <header>
+            <p class="eyebrow">Material de aprendizaje · Python</p>
+            <h1>Funciones en Python</h1>
+            <p class="subtitle">Definición, parámetros, llamadas y organización de programas</p>
+            <p class="byline">Ing. William Ramón Flórez · Instructor SENA<br>Visual Studio Code &amp; Python</p>
+            <div class="cover-note">
+                Una guía práctica construida a partir de los ejercicios de la carpeta <strong>funciones</strong>.
+                Incluye los programas, su propósito y los conceptos que se aplican en cada uno.
+            </div>
+        </header>
+        <main>
+            <div class="contents">
+                <h2>Temario principal</h2>
+                <ul>
+                    <li>Qué es una función y cómo se escribe</li>
+                    <li>Funciones sin parámetros</li>
+                    <li>Funciones con parámetros y datos ingresados por teclado</li>
+                    <li>Ejercicios integradores: varias funciones y decisiones</li>
+                    <li>Buenas prácticas y repaso</li>
+                </ul>
+                <div class="callout"><strong>Propósito:</strong> reconocer cómo una función agrupa instrucciones bajo un nombre y cómo se ejecuta al invocarla.</div>
+            </div>
+        </main>
+    </div>
+
+    <main>
+        <section>
+            <h2>1. ¿Qué es una función?</h2>
+            <p>Una función es un bloque de instrucciones con nombre que puede ejecutarse cuando el programa la llama. En Python se define con <code>def</code>, seguido del nombre, paréntesis y dos puntos. El bloque se escribe con sangría.</p>
+            <pre>def nombre_de_funcion():
+    instrucciones
+
+nombre_de_funcion()</pre>
+            <ul>
+                <li><code>def</code> inicia la definición.</li>
+                <li>El nombre describe la tarea que realiza.</li>
+                <li>Los paréntesis pueden estar vacíos o contener parámetros.</li>
+                <li>La llamada se escribe con el nombre y paréntesis: la definición por sí sola no ejecuta el bloque.</li>
+            </ul>
+            <div class="callout"><strong>En estos ejercicios:</strong> las funciones muestran mensajes con <code>print()</code>. No usan <code>return</code>; por eso el resultado se presenta directamente en la consola.</div>
+        </section>
+
+        <section>
+            <h2>2. Funciones sin parámetros</h2>
+            <p>Estas funciones no reciben datos entre sus paréntesis. Cada llamada realiza la tarea definida, por ejemplo, mostrar un mensaje, una ficha o reglas de trabajo.</p>
+
+            <article class="example">
+                <h3>Mensaje de bienvenida</h3><span class="filename">bienvenida.py</span>
+                <p>La función encapsula un mensaje fijo y se ejecuta al final del archivo.</p>
+                <pre>def bienvenida_python():
+    print("Iniciando motor de ejecución de Python 3.x")
+
+bienvenida_python()</pre>
+            </article>
+
+            <article class="example">
+                <h3>Programa de formación</h3><span class="filename">saludo.py</span>
+                <p>La variable se crea dentro de la función; su alcance queda limitado a ese bloque.</p>
+                <pre>def mostrar_programa():
+    programa="ADSO"
+    print(f"Bienvenido al programa: {programa}")
+
+mostrar_programa()</pre>
+                <div class="output"><strong>Salida:</strong> Bienvenido al programa: ADSO</div>
+            </article>
+
+            <article class="example">
+                <h3>Mostrar número de ficha</h3><span class="filename">ficha.py</span>
+                <pre>def mostrar_ficha():
+    ficha = 3388070
+    print(f"Ficha: {ficha}")
+
+mostrar_ficha()</pre>
+            </article>
+
+            <article class="example">
+                <h3>Aviso de mantenimiento</h3><span class="filename">mantenimiento.py</span>
+                <pre>def aviso_mantenimiento():
+    print("El programa se encuentra en mantenimiento, por favor intente más tarde.")
+
+aviso_mantenimiento()</pre>
+            </article>
+
+            <article class="example">
+                <h3>Reglas del ambiente</h3><span class="filename">normas.py</span>
+                <pre>def reglas_ambiente():
+    print("1. Mantener el área de trabajo limpia y ordenada.")
+    print("2. No consumir alimentos ni bebidas cerca del equipo.")
+
+reglas_ambiente()</pre>
+            </article>
+
+            <article class="example">
+                <h3>Reporte final</h3><span class="filename">reporte.py</span>
+                <pre>def reporte_final():
+    print("Práctica de funciones concluida satisfactoriamente")
+
+reporte_final()</pre>
+            </article>
+
+            <article class="example">
+                <h3>Respaldo de datos</h3><span class="filename">respaldo.py</span>
+                <p>El texto del ejercicio menciona archivos PHP y Python; la función únicamente presenta el aviso, no realiza una copia real.</p>
+                <pre>def respaldo_datos():
+    print("Generando copia de seguridad de archivos PHP y Python...")
+
+respaldo_datos()</pre>
+            </article>
+
+            <article class="example">
+                <h3>Estado de conexión</h3><span class="filename">cloud.py</span>
+                <pre>def estado_cloud():
+    print("Conexión estable con el servidor remoto de VS Code")
+
+estado_cloud()</pre>
+            </article>
+        </section>
+
+        <section class="section-break">
+            <h2>3. Parámetros y entradas</h2>
+            <p>Un parámetro es una variable incluida en la definición de una función para recibir un dato. Al llamar la función se entrega un argumento, que ocupa el lugar de ese parámetro.</p>
+            <pre>def saludar(nombre):
+    print(f"Hola, {nombre}")
+
+saludar("Ana")</pre>
+
+            <article class="example">
+                <h3>Presentación personal</h3><span class="filename">presentacion.py</span>
+                <p>El programa solicita el nombre, define el rol y envía ambos valores como argumentos a la función.</p>
+                <pre>nombre = input("Ingrese su nombre completo: ")
+rol = "aprendiz ADSO"
+
+def presentacion_personal(nombre, rol):
+    print(f"Bienvenido {nombre}, eres {rol}")
+
+presentacion_personal(nombre, rol)</pre>
+            </article>
+
+            <article class="example">
+                <h3>Saludo por trimestre</h3><span class="filename">trimestre.py</span>
+                <p>El valor ingresado por teclado se pasa a la función como argumento.</p>
+                <pre>trimestre = input("Ingrese su trimestre actual: ")
+
+def saludar_trimestre(trimestre):
+    print(f"Bienvenido al trimestre: {trimestre}")
+
+saludar_trimestre(trimestre)</pre>
+            </article>
+        </section>
+
+        <section class="section-break">
+            <h2>4. Ejercicios integradores</h2>
+            <p>Al dividir un programa en funciones, cada bloque puede encargarse de una parte concreta. Esto facilita leer el flujo, reutilizar instrucciones y mantener el código organizado.</p>
+
+            <article class="example">
+                <h3>Datos de la institución</h3><span class="filename">ejercicio_integrado1.py</span>
+                <p>Se definen funciones para mostrar el encabezado, los detalles del programa y el pie de página. La respuesta del usuario decide cuáles se llaman.</p>
+                <pre>n_insitucion = "SENA"
+n_centro = "Centro de servicios financieros"
+instructor = "William Ramón Flórez"
+n_programa = "ADSO"
+
+def mostrar_encabezado():
+    print(f"Institución: {n_insitucion}")
+    print(f"Centro de formación: {n_centro}")
+
+def mostrar_detalles_programa():
+    print(f"Instructor: {instructor}")
+    print(f"Programa: {n_programa}")
+
+def mostrar_pie_pagina():
+    print("Gracias por utilizar este programa de funciones en Python")
+
+mostrar_encabezado()
+detalles = input("mostrar detalles (s/n): ")
+if detalles.lower() == "s":
+    mostrar_detalles_programa()
+    mostrar_pie_pagina()
+elif detalles.lower() == "n":
+    mostrar_pie_pagina()
+else:
+    print("Opción no válida. Por favor, ingrese 's' o 'n'.")</pre>
+            </article>
+
+            <article class="example">
+                <h3>Menú de misión, visión y contacto</h3><span class="filename">ejercicio_integrado2.py</span>
+                <p>Este ejemplo combina datos compartidos, funciones pequeñas, una entrada de usuario y una estructura <code>if/elif/else</code>. El bloque principal evita que el menú se ejecute cuando el archivo se importa desde otro módulo.</p>
+                <pre>mision = "cumplir la función que le corresponde al Estado de invertir en el desarrollo social y técnico de los trabajadores colombianos."
+vision = "ser una entidad de excelencia en la formación integral de los aprendices, con calidad y pertinencia, que contribuya al desarrollo del país."
+contacto = "https://www.sena.edu.co/es-co/Paginas/contactenos.aspx"
+
+def opcion_mision():
+    print(f"Misión: {mision}")
+
+def opcion_vision():
+    print(f"Visión: {vision}")
+
+def opcion_contacto():
+    print(f"Contacto: {contacto}")
+
+if __name__ == "__main__":
+    print("Opciones disponibles:")
+    print("1. Misión")
+    print("2. Visión")
+    print("3. Contacto")
+    opcion = input("Seleccione una opción (1, 2 o 3): ")
+
+    if opcion == "1":
+        opcion_mision()
+    elif opcion == "2":
+        opcion_vision()
+    elif opcion == "3":
+        opcion_contacto()
+    else:
+        print("Opción no válida.")</pre>
+            </article>
+        </section>
+
+        <section>
+            <h2>5. Ideas clave y buenas prácticas</h2>
+            <ul>
+                <li>Usa nombres descriptivos, normalmente en minúsculas y separados por guion bajo: <code>mostrar_ficha()</code>.</li>
+                <li>Define la función antes de la llamada, para que Python conozca su nombre cuando deba ejecutarla.</li>
+                <li>Mantén la sangría consistente dentro del bloque de la función.</li>
+                <li>Pasa como argumentos los datos que la función necesita; así puede trabajar con distintos valores.</li>
+                <li>Divide programas largos en funciones que realicen tareas concretas.</li>
+                <li>Usa <code>if __name__ == "__main__":</code> cuando el archivo también pueda importarse desde otro programa.</li>
+            </ul>
+            <div class="callout"><strong>Repaso:</strong> ¿qué palabra inicia una función?, ¿cómo se llama una función sin parámetros?, ¿qué diferencia hay entre un parámetro y un argumento?</div>
+        </section>
+        <footer>Guía de aprendizaje · Funciones en Python · SENA · Visual Studio Code</footer>
+    </main>
+</body>
+</html>
